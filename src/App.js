@@ -3,6 +3,8 @@ import './App.css';
 import Header from './ui/Header';
 import theme from './ui/Theme';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import CardComp from './components/CardComp'
+import PopularCliparts from './components/home/PopularCliparts'
 
 function App() {
 	return (
@@ -11,6 +13,8 @@ function App() {
 				<BrowserRouter>
 					<Header />
 					Hello
+					<CardComp />
+					<PopularCliparts />
 					<Switch>
 						<Route exact path='/' component={() => <div>Hey It's HOme</div>} />
 						<Route
