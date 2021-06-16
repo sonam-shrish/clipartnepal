@@ -1,30 +1,29 @@
-import { useState } from "react";
-
 import { db } from "../../firebase";
 import TestCardComp from "./TestCardcomp";
 
 const PopularCliparts = () => {
 
   var docRef = db.collection("data").doc("data1");
-  const imgData = {}
+  let info = {}
 
   docRef
     .get()
     .then((doc) => {
       if (doc.exists) {
         console.log("Document data:", doc.data());
-        imgData = doc.data()
+        info = doc.data()
+        console.log(info)
       } else {
         // doc.data() will be undefined in this case
-        console.log("No such document!");
+        console.log("No such image data!");
       }
     })
     .catch((error) => {
-      console.log("Error getting document:", error);
+      console.log("Error getting imgae data:", error);
     });
   return (
     <>
-      <TestCardComp />
+      <TestCardComp info = {info} />
     </>
   );
 };

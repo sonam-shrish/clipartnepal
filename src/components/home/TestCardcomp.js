@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import {CardContent, Typography} from '@material-ui/core'
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
@@ -35,6 +36,12 @@ export default function CardComp() {
           src="https://wikiclipart.com/wp-content/uploads/2016/11/Cookie-monster-clipart-4.png"
         />
       </center>
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          This impressive paella is a perfect party dish and a fun meal to cook together with your
+          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+        </Typography>
+      </CardContent>
 
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
