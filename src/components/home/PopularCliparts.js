@@ -1,31 +1,54 @@
-import { db } from "../../firebase";
-import TestCardComp from "./TestCardcomp";
+import { useEffect, useState } from 'react';
+import { db } from '../../firebase';
+import TestCardComp from './TestCardcomp';
+import ClipartCard from '../ClipartCard';
+
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+	cliparts: {
+		display: 'grid',
+		gridTemplateColumns: 'repeat(4, minmax(300px, 1fr))',
+	},
+});
 
 const PopularCliparts = () => {
+	const classes = useStyles();
 
-  var docRef = db.collection("data").doc("data1");
-  let info = {}
+	const [popularCliparts, setPopularCliparts] = useState([]);
+	var docRef = db.collection('data').doc('data1');
 
-  docRef
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        console.log("Document data:", doc.data());
-        info = doc.data()
-        console.log(info)
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such image data!");
-      }
-    })
-    .catch((error) => {
-      console.log("Error getting imgae data:", error);
-    });
-  return (
-    <>
-      <TestCardComp info = {info} />
-    </>
-  );
+	useEffect(() => {
+		// getData();
+		getDataArray();
+	}, []);
+
+	function getDataArray() {
+		const popArray = [];
+		const popularArr = db
+			.collection('data')
+			.orderBy('views', 'desc')
+			.limit(8)
+			.get()
+			.then(({ docs }) => {
+				docs.forEach((doc) => popArray.push(doc.data()));
+				console.log(docs[1].data());
+				setPopularCliparts(popArray);
+				console.log(popArray);
+			});
+	}
+
+	return (
+		<>
+			{/* <TestCardComp info={info} /> */}
+			<h2>Popular Cliparts</h2>
+			<div className={classes.cliparts}>
+				{popularCliparts.map((clipart) => (
+					<ClipartCard clipartInfo={clipart} />
+				))}
+			</div>
+		</>
+	);
 };
 
 export default PopularCliparts;
