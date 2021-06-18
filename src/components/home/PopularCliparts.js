@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { db } from '../../firebase';
-import TestCardComp from './TestCardcomp';
 import ClipartCard from '../ClipartCard';
 
 import { makeStyles } from '@material-ui/core';
@@ -16,7 +15,6 @@ const PopularCliparts = () => {
 	const classes = useStyles();
 
 	const [popularCliparts, setPopularCliparts] = useState([]);
-	var docRef = db.collection('data').doc('data1');
 
 	useEffect(() => {
 		// getData();
@@ -40,7 +38,6 @@ const PopularCliparts = () => {
 
 	return (
 		<>
-			{/* <TestCardComp info={info} /> */}
 			<h2>Popular Cliparts</h2>
 			<div className={classes.cliparts}>
 				{popularCliparts.map((clipart) => (

@@ -44,17 +44,5 @@ export default function CardComp2({ imgName, url }) {
 				</IconButton>
 			</CardActions>
 		</Card>
-		// <Card className={classes.root}>
-		// 	<center>
-		// 		<img className={classes.media} alt={imgName} src={url} />
-		// 	</center>
-		// 	<CardActions>
-		// 		<a download href={url}>
-		// 			<IconButton className={classes.downloadBtn} aria-label='download'>
-		// 				<CloudDownloadIcon />
-		// 			</IconButton>
-		// 		</a>
-		// 	</CardActions>
-		// </Card>
 	);
 }
