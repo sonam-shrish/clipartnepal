@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { db } from '../../firebase';
+
 import {
 	Toolbar,
 	Typography,
@@ -11,7 +14,6 @@ import {
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/styles';
-import logo from '../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	toolbarMargin: {
@@ -41,9 +43,32 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Header = () => {
+const CategoriesTabs = () => {
 	const [activeTab, setActiveTab] = useState(0);
+	const [categoriesArray, setCategoriesArray] = useState([]);
+
 	const classes = useStyles();
+
+	useEffect(() => {
+		function getCategoriesArray() {
+			const categoriesArr = [];
+
+			db.collection('categories')
+				.get()
+				.then(({ docs }) => {
+					docs.forEach((cat) => categoriesArr.push(cat));
+					console.log(categoriesArr);
+					setCategoriesArray(categoriesArr);
+					// docs.forEach((doc) => popArray.push(doc.data()));
+					// console.log(docs[1].data());
+					// setPopularCliparts(popArray);
+					// console.log(popArray);
+				});
+		}
+
+		getCategoriesArray();
+	}, []);
+
 	function ElevationScroll(props) {
 		const { children } = props;
 
@@ -61,41 +86,28 @@ const Header = () => {
 	return (
 		<>
 			<ElevationScroll>
-				<AppBar position='fixed'>
-					<Toolbar>
-						<Button
-							disableRipple
-							component={Link}
-							to='/'
-							className={classes.logoBtn}
-						>
-							<img src={logo} className={classes.logo} />
-						</Button>
-						<Tabs
-							value={activeTab}
-							onChange={handleActiveTab}
-							className={classes.tabsContainer}
-						>
+				<Toolbar>
+					<Tabs
+						value={activeTab}
+						onChange={handleActiveTab}
+						className={classes.tabsContainer}
+						variant='scrollable'
+						scrollButtons='on'
+					>
+						{categoriesArray.map((cat) => (
 							<Tab
-								label='Home'
+								label={cat.id}
 								className={classes.tab}
 								component={Link}
-								to='/'
+								to={'/categories/' + cat.id}
 							/>
-
-							<Tab
-								label='Contact'
-								className={classes.tab}
-								component={Link}
-								to='/'
-							/>
-						</Tabs>
-					</Toolbar>
-				</AppBar>
+						))}
+					</Tabs>
+				</Toolbar>
 			</ElevationScroll>
 			<div className={classes.toolbarMargin} />
 		</>
 	);
 };
 
-export default Header;
+export default CategoriesTabs;

@@ -8,9 +8,9 @@ import CardComp from './components/ClipartCard';
 import PopularCliparts from './components/home/PopularCliparts';
 import RecentCliparts from './components/home/RecentClipart';
 import SearchBar from './components/SearchBar';
-import Categories from './components/home/Categories'
-import SubCategory from './components/categories/SubCategory'
-import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList'
+import CategoriesTabs from './components/home/CategoriesTabs';
+import SubCategories from './components/categories/SubCategories';
+import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList';
 
 function App() {
 	return (
@@ -19,22 +19,17 @@ function App() {
 				<BrowserRouter>
 					<Header />
 					Hello
-					<div>Hellou</div>
 					{/* <Categories /> */}
-					{/* <SubCategory /> */}
-					<IndividualSubCategoryList />
-					
-					{/* <SearchBar /> */}
-					{/* <PopularCliparts /> */}
-					{/* <RecentCliparts /> */}
-					<Switch>
-						<Route exact path='/' component={() => <div>Hey It's HOme</div>} />
-						<Route
-							exact
-							path='/portfolio'
-							component={() => <div>Artist Portfolio</div>}
-						/>
-					</Switch>
+					{/* <IndividualSubCategoryList /> */}
+					<SearchBar />
+					<Route path='/' component={CategoriesTabs} />
+					<Route exact path='/' component={PopularCliparts} />
+					<Route exact path='/' component={RecentCliparts} />
+					<Route exact path='/categories/:catName' component={SubCategories} />
+					<Route
+						path='/categories/:catName/:subCatName'
+						component={IndividualSubCategoryList}
+					/>
 				</BrowserRouter>
 			</div>
 		</ThemeProvider>
