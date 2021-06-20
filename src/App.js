@@ -11,6 +11,7 @@ import SearchBar from './components/SearchBar';
 import CategoriesTabs from './components/home/CategoriesTabs';
 import SubCategories from './components/categories/SubCategories';
 import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList';
+import AddClipart from './components/upload/AddClipart';
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 				<BrowserRouter>
 					<Header />
 					Hello
+					<AddClipart />
 					{/* <Categories /> */}
 					{/* <IndividualSubCategoryList /> */}
 					<SearchBar />
@@ -30,6 +32,7 @@ function App() {
 						path='/categories/:catName/:subCatName'
 						component={IndividualSubCategoryList}
 					/>
+					<Route path='/admin/upload' component={AddClipart} />
 				</BrowserRouter>
 			</div>
 		</ThemeProvider>

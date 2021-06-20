@@ -26,12 +26,11 @@ const IndividualSubCategoryList = (props) => {
 			.get();
 		results.then(({ docs }) => {
 			docs.forEach((item) => resultsArray.push(item.data()));
-			console.log(resultsArray);
+			// console.log(resultsArray);
 			setSubCategoriesItems(resultsArray);
-			console.log('hello');
 		});
 	}, []);
-	console.log(subCatWord);
+	// console.log(subCatWord);
 
 	const classes = useStyles();
 

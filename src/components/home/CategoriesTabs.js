@@ -11,7 +11,7 @@ import {
 	Tab,
 	Button,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/styles';
 
@@ -43,21 +43,23 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const CategoriesTabs = () => {
+const CategoriesTabs = (props) => {
+	let history = props.history;
+	console.log(history);
 	const [activeTab, setActiveTab] = useState(0);
 	const [categoriesArray, setCategoriesArray] = useState([]);
 
 	const classes = useStyles();
 
 	useEffect(() => {
-		function getCategoriesArray() {
+		function getCategoriesArray(props) {
+			console.log(props);
 			const categoriesArr = [];
 
 			db.collection('categories')
 				.get()
 				.then(({ docs }) => {
 					docs.forEach((cat) => categoriesArr.push(cat));
-					console.log(categoriesArr);
 					setCategoriesArray(categoriesArr);
 					// docs.forEach((doc) => popArray.push(doc.data()));
 					// console.log(docs[1].data());
@@ -79,8 +81,13 @@ const CategoriesTabs = () => {
 
 		return React.cloneElement(children, { elevation: trigger ? 4 : 0 });
 	}
+
 	function handleActiveTab(e, value) {
 		setActiveTab(value);
+	}
+
+	function handleCategoriesClick(e) {
+		history.push('/' + e.target.outerText);
 	}
 
 	return (
@@ -96,6 +103,7 @@ const CategoriesTabs = () => {
 					>
 						{categoriesArray.map((cat) => (
 							<Tab
+								onClick={handleCategoriesClick}
 								label={cat.id}
 								className={classes.tab}
 								component={Link}
@@ -110,4 +118,4 @@ const CategoriesTabs = () => {
 	);
 };
 
-export default CategoriesTabs;
+export default withRouter(CategoriesTabs);
