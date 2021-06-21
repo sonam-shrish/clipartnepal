@@ -4,16 +4,16 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {
 	TextField,
 	Button,
-	IconButton,
 	FormControl,
 	Input,
 	Chip,
 	Paper,
-	Avatar,
 } from '@material-ui/core';
 import { CloudUploadIcon, PhotoCamera, Done } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { db, storage } from '../../firebase';
+import AddNewCategory from './AddNewCategory';
+import AddNewSubCategories from './AddNewSubCategories';
 import firebase from 'firebase';
 
 const useStyles = makeStyles({
@@ -48,6 +48,9 @@ const textFieldHandler = (e, value) => {
 
 export default function UploadForm() {
 	console.log();
+
+	const [categoriesArray, setCategoriesArray] = useState([]);
+	const [subcategoriesArray, setSubcategoriesArray] = useState([]);
 	const [image, setImage] = useState(null);
 	const [imageSize, setImageSize] = useState(0);
 	const [imageType, setImageType] = useState(null);
@@ -59,12 +62,55 @@ export default function UploadForm() {
 	const [tags, setTags] = useState([]);
 	const [progress, setProgress] = useState(0);
 	const [uploadError, setUploadError] = useState(null);
+	const [rerender, setRerender] = useState(false);
 
 	const classes = useStyles();
 
 	useEffect(() => {
+		setRerender(false);
 		getData();
 	}, []);
+
+	useEffect(() => {
+		/////////////////////////////////////////////GETTING OPTIONS FOR AUTOCOMPLETE
+		function getCategoriesArray() {
+			const categoriesArr = [];
+
+			db.collection('categories')
+				.get()
+				.then(({ docs }) => {
+					docs.forEach((cat) => categoriesArr.push(cat.id));
+					setCategoriesArray(categoriesArr);
+				});
+		}
+
+		getCategoriesArray();
+	}, []);
+	useEffect(() => {
+		function getSubCategoriesArray() {
+			const subCategoriesArr = [];
+			if (uploadCategories) {
+				uploadCategories.forEach((cat) => {
+					db.collection('categories')
+						.doc(cat)
+						.get()
+						.then((doc) => {
+							const individualSubcats = doc.data().subcategories;
+							if (individualSubcats) {
+								individualSubcats.forEach((subCat) => {
+									console.log(subCat);
+									subCategoriesArr.push(subCat.name);
+									setSubcategoriesArray(subCategoriesArr);
+								});
+								console.log(subCategoriesArr);
+							}
+						});
+				});
+			}
+		}
+
+		getSubCategoriesArray();
+	}, [uploadCategories]);
 
 	useEffect(() => {
 		if (image) {
@@ -106,10 +152,9 @@ export default function UploadForm() {
 			setImage(img);
 			setImageSize(img.size / (1024 * 1024));
 			setImageType(img.type);
-			console.log(img.type, img.size);
+			console.log(img.type, img.size, img.name);
 		}
 		e.target.files[0] ? setImage(e.target.files[0]) : setImage(null);
-		console.log(e.target.files[0]);
 	}
 
 	function handleCategoriesInput(e, value) {
@@ -243,7 +288,7 @@ export default function UploadForm() {
 							multiple
 							id='categories-input'
 							onChange={handleCategoriesInput}
-							options={categories}
+							options={categoriesArray}
 							getOptionLabel={(category) => category}
 							filterSelectedOptions
 							renderInput={(params) => (
@@ -262,7 +307,7 @@ export default function UploadForm() {
 							onChange={handleSubcategoriesInput}
 							multiple
 							id='categories-input'
-							options={subCategories}
+							options={subcategoriesArray}
 							getOptionLabel={(subCatoegory) => subCatoegory}
 							filterSelectedOptions
 							renderInput={(params) => (
@@ -310,15 +355,8 @@ export default function UploadForm() {
 					</Button>
 				</form>
 			</Paper>
+			<AddNewCategory existingCategories={categoriesArray} />
+			<AddNewSubCategories existingCategories={categoriesArray} />
 		</center>
 	);
 }
-
-const categories = ['Animal', 'Black and White', 'Cartoon', 'Food', 'Greeting'];
-const subCategories = [
-	'Animal',
-	'Black and White',
-	'Cartoon',
-	'Food',
-	'Greeting',
-];
