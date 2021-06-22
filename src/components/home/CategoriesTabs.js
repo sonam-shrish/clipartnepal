@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoriesTabs = (props) => {
 	let history = props.history;
-	console.log(history);
 	const [activeTab, setActiveTab] = useState(0);
 	const [categoriesArray, setCategoriesArray] = useState([]);
 
@@ -53,7 +52,6 @@ const CategoriesTabs = (props) => {
 
 	useEffect(() => {
 		function getCategoriesArray(props) {
-			console.log(props);
 			const categoriesArr = [];
 
 			db.collection('categories')
@@ -61,10 +59,6 @@ const CategoriesTabs = (props) => {
 				.then(({ docs }) => {
 					docs.forEach((cat) => categoriesArr.push(cat));
 					setCategoriesArray(categoriesArr);
-					// docs.forEach((doc) => popArray.push(doc.data()));
-					// console.log(docs[1].data());
-					// setPopularCliparts(popArray);
-					// console.log(popArray);
 				});
 		}
 

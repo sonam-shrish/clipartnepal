@@ -11,6 +11,9 @@ const useStyles = makeStyles({
 		display: 'grid',
 		gridTemplateColumns: 'repeat(4, minmax(300px, 1fr))',
 	},
+	searchForm: {
+		marginTop: '2em',
+	},
 });
 
 function SearchBar() {
@@ -41,7 +44,7 @@ function SearchBar() {
 
 	return (
 		<>
-			<form onSubmit={handleSearchSubmit}>
+			<form onSubmit={handleSearchSubmit} className={classes.searchForm}>
 				<div className='searchContainer'>
 					<div class='search active'>
 						<div class='icon'></div>

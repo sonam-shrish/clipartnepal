@@ -8,20 +8,16 @@ import { Link, withRouter } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 300,
-		marginTop: '7rem',
+		margin: '10px 15px',
 	},
 	media: {
 		maxWidth: '280px',
 		objectFit: 'contain',
 	},
+	link: {
+		textDecoration: 'none',
+	},
 }));
-
-function getModalStyle() {
-	return {
-		top: `50%`,
-		left: `50%`,
-	};
-}
 
 function SubCategoryItem(props) {
 	const classes = useStyles();
@@ -34,7 +30,7 @@ function SubCategoryItem(props) {
 	console.log(props);
 	return (
 		<>
-			<Link to={subCatURL}>
+			<Link className={classes.link} to={subCatURL}>
 				<Card className={classes.root}>
 					<center>
 						<img className={classes.media} alt='ImageName' src={url} />

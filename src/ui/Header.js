@@ -84,10 +84,10 @@ const Header = () => {
 							/>
 
 							<Tab
-								label='Contact'
+								label='Add Clipart'
 								className={classes.tab}
 								component={Link}
-								to='/'
+								to='/admin/add-clipart'
 							/>
 						</Tabs>
 					</Toolbar>

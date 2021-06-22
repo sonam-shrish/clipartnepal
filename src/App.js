@@ -11,7 +11,10 @@ import SearchBar from './components/SearchBar';
 import CategoriesTabs from './components/home/CategoriesTabs';
 import SubCategories from './components/categories/SubCategories';
 import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList';
+import Footer from './ui/Footer';
+//admin imports
 import AddClipart from './components/upload/AddClipart';
+import AllCliparts from './components/upload/AllCliparts';
 
 function App() {
 	return (
@@ -20,7 +23,7 @@ function App() {
 				<BrowserRouter>
 					<Header />
 					Hello
-					<AddClipart />
+					{/* <AddClipart /> */}
 					{/* <Categories /> */}
 					{/* <IndividualSubCategoryList /> */}
 					<SearchBar />
@@ -29,10 +32,14 @@ function App() {
 					<Route exact path='/' component={RecentCliparts} />
 					<Route exact path='/categories/:catName' component={SubCategories} />
 					<Route
+						exact
 						path='/categories/:catName/:subCatName'
 						component={IndividualSubCategoryList}
 					/>
-					<Route path='/admin/upload' component={AddClipart} />
+					{/* PATHS FOR ADMIN */}
+					<Route path='/admin/add-clipart' component={AddClipart} />
+					<Route path='/admin/all-cliparts' component={AllCliparts} />
+					<Footer />
 				</BrowserRouter>
 			</div>
 		</ThemeProvider>

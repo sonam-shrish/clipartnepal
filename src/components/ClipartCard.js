@@ -1,51 +1,64 @@
 //Complete card small
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Favorite, Share, CloudDownload } from '@material-ui/icons';
+import { Favorite, CloudDownload } from '@material-ui/icons';
 import { Modal, CardContent, Typography } from '@material-ui/core';
-import { IconButton, Card, CardActions } from '@material-ui/core';
+import { IconButton, Card, CardActions, Chip, Paper } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: 300,
-		marginTop: '7rem',
+		maxHeight: '400px',
+		overflow: 'auto',
+		margin: '10px 15px',
 	},
 	media: {
-		maxWidth: '280px',
 		objectFit: 'contain',
+		width: '100%',
 	},
 
 	downloadBtn: {
 		marginLeft: 'auto',
 	},
-	// root: {
-	// 	maxWidth: 445,
-	// 	marginTop: '7rem',
-	// },
 
-	downloadBtn: {
+	actionBtns: {
 		marginLeft: 'auto',
 	},
 	list: {
 		listStyleType: 'none',
 		textAlign: 'left',
 	},
+	modal: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	modalCard: {
+		width: '400px',
+		maxWidth: '400px',
+		maxHeight: '550px',
+		overflow: 'auto',
+	},
 	paper: {
-		position: 'absolute',
-		width: 400,
-		backgroundColor: theme.palette.background.paper,
-		border: '2px solid #000',
-		boxShadow: theme.shadows[5],
-		padding: theme.spacing(2, 4, 3),
+		padding: '5px 10px',
+		marginTop: '10px',
+	},
+	chip: {
+		margin: '5px',
+	},
+	'@global': {
+		'*::-webkit-scrollbar': {
+			width: '0.2em',
+		},
+		'*::-webkit-scrollbar-track': {
+			'-webkit-box-shadow': 'inset 0 0 6px rgba(0,0,0,0.00)',
+		},
+		'*::-webkit-scrollbar-thumb': {
+			backgroundColor: 'rgba(0,0,0,.1)',
+			outline: '1px solid slategrey',
+		},
 	},
 }));
-
-function getModalStyle() {
-	return {
-		top: `50%`,
-		left: `50%`,
-	};
-}
 
 export default function ClipartCard(props) {
 	const classes = useStyles();
@@ -56,13 +69,13 @@ export default function ClipartCard(props) {
 		tags,
 		url,
 		downloads,
+		type,
 		size,
 		views,
 	} = props.clipartInfo;
 
 	//MODAL FUNCTIONS
 	// getModalStyle is not a pure function, we roll the style only on the first render
-	const [modalStyle] = React.useState(getModalStyle);
 	const [open, setOpen] = React.useState(false);
 
 	const handleOpen = () => {
@@ -75,18 +88,22 @@ export default function ClipartCard(props) {
 
 	return (
 		<>
-			<Card className={classes.root} onClick={handleOpen}>
+			<Card className={classes.root}>
 				<center>
-					<img className={classes.media} alt={imgName} src={url} />
+					<img
+						className={classes.media}
+						alt={imgName}
+						src={url}
+						onClick={handleOpen}
+					/>
 				</center>
 
 				<CardActions disableSpacing>
 					<IconButton aria-label='add to favorites'>
 						<Favorite />
 					</IconButton>
-					<IconButton aria-label='share'>
-						<Share />
-					</IconButton>
+					<Typography>{imgName}</Typography>
+
 					<IconButton className={classes.downloadBtn} aria-label='download'>
 						<CloudDownload />
 					</IconButton>
@@ -97,35 +114,20 @@ export default function ClipartCard(props) {
 			<Modal
 				open={open}
 				onClose={handleClose}
+				className={classes.modal}
 				aria-labelledby='clipartTitle'
 				aria-describedby='simple-modal-description'
 			>
-				<div style={modalStyle} className={classes.paper}>
-					<Card className={classes.root}>
-						<center>
-							<img className={classes.media} alt='testimg' src={url} />
-						</center>
-						<p>Hello</p>
-						<CardContent vlassName={classes.left}>
-							<Typography variant='h5' component='h5'>
-								{imgName}
-							</Typography>
-							<ul className={classes.list}>
-								<li>Views: {views}</li>
-								<li>Downloads {downloads}</li>
-								<li>Size: {size}</li>
-							</ul>
-						</CardContent>
+				<Card className={classes.modalCard}>
+					<center>
+						<img className={classes.media} alt='testimg' src={url} />
+					</center>
 
-						<CardActions disableSpacing>
+					<CardActions disableSpacing>
+						<b>{imgName}</b>
+						<div className={classes.actionBtns}>
 							<IconButton aria-label='add to favorites'>
 								<Favorite />
-							</IconButton>
-							<a download href={url}>
-								Download the video
-							</a>
-							<IconButton aria-label='share'>
-								<Share />
 							</IconButton>
 
 							<a download href={url}>
@@ -136,9 +138,36 @@ export default function ClipartCard(props) {
 									<CloudDownload />
 								</IconButton>
 							</a>
-						</CardActions>
-					</Card>
-				</div>
+						</div>
+					</CardActions>
+					<CardContent vlassName={classes.left}>
+						<ul className={classes.list}>
+							<li>Views: {views}</li>
+							<li>Downloads {downloads}</li>
+							<li>Size: {size}</li>
+							<li>Type: {type} </li>
+							<li>
+								<Paper className={classes.paper}>
+									<p>Sub Category</p>
+									{subcategories.map((category) => (
+										<Chip className={classes.chip} label={category} />
+									))}
+								</Paper>
+							</li>
+							<li>
+								<Paper className={classes.paper}>
+									<p>Tags</p>
+
+									{tags
+										? tags.map((tag) => (
+												<Chip className={classes.chip} label={tag} />
+										  ))
+										: null}
+								</Paper>
+							</li>
+						</ul>
+					</CardContent>
+				</Card>
 			</Modal>
 		</>
 	);

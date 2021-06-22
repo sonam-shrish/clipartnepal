@@ -38,9 +38,13 @@ const IndividualSubCategoryList = (props) => {
 		<div>
 			<h2>{subCatWord.toUpperCase()}</h2>
 			<div className={classes.cliparts}>
-				{subCategoriesItems.map((clipart) => (
-					<ClipartCard clipartInfo={clipart} />
-				))}
+				{subCategoriesItems ? (
+					subCategoriesItems.map((clipart) => (
+						<ClipartCard clipartInfo={clipart} />
+					))
+				) : (
+					<div>No Images for the sub category</div>
+				)}
 			</div>
 		</div>
 	);

@@ -8,7 +8,9 @@ import {
 	Input,
 	Chip,
 	Paper,
+	Snackbar,
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { CloudUploadIcon, PhotoCamera, Done } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { db, storage } from '../../firebase';
@@ -42,10 +44,6 @@ const useStyles = makeStyles({
 	},
 });
 
-const textFieldHandler = (e, value) => {
-	console.log(e, value);
-};
-
 export default function UploadForm() {
 	console.log();
 
@@ -61,15 +59,10 @@ export default function UploadForm() {
 	const [tagInput, setTagInput] = useState('');
 	const [tags, setTags] = useState([]);
 	const [progress, setProgress] = useState(0);
+	const [categoriesUpdated, setCategoriesUpdated] = useState(false);
 	const [uploadError, setUploadError] = useState(null);
-	const [rerender, setRerender] = useState(false);
 
 	const classes = useStyles();
-
-	useEffect(() => {
-		setRerender(false);
-		getData();
-	}, []);
 
 	useEffect(() => {
 		/////////////////////////////////////////////GETTING OPTIONS FOR AUTOCOMPLETE
@@ -81,10 +74,13 @@ export default function UploadForm() {
 				.then(({ docs }) => {
 					docs.forEach((cat) => categoriesArr.push(cat.id));
 					setCategoriesArray(categoriesArr);
-				});
+				})
+				.catch((error) => console.log(error));
 		}
 
 		getCategoriesArray();
+		setUploadError(null);
+		setCategoriesUpdated(false);
 	}, []);
 	useEffect(() => {
 		function getSubCategoriesArray() {
@@ -112,6 +108,7 @@ export default function UploadForm() {
 		getSubCategoriesArray();
 	}, [uploadCategories]);
 
+	//handle image upload to the browser NOT server
 	useEffect(() => {
 		if (image) {
 			const reader = new FileReader();
@@ -125,6 +122,17 @@ export default function UploadForm() {
 			setPreviewURL(null);
 		}
 	}, [image]);
+
+	// HANDLE ALL KINDS OF UPLOAD ERRORS
+	function handleError(error) {
+		setUploadError(error);
+		console.log(error);
+	}
+
+	//if I add a new category then the category list should be updated in all the forms so, for that I have to rerender the whole component
+	function categorieUpdated() {
+		setCategoriesUpdated(true);
+	}
 
 	const getData = () => {
 		//collectionRef
@@ -141,20 +149,19 @@ export default function UploadForm() {
 	};
 
 	////////////////////////////////////////////INPUT FIELD CHANGE HANDLER/////////////////////////////
-	function handleClipartNameChange(e) {
-		e.preventDefault();
-		setUploadName(e.target.value);
-	}
-
 	function handleImageUpload(e) {
 		if (e.target.files[0]) {
 			let img = e.target.files[0];
 			setImage(img);
 			setImageSize(img.size / (1024 * 1024));
 			setImageType(img.type);
-			console.log(img.type, img.size, img.name);
 		}
 		e.target.files[0] ? setImage(e.target.files[0]) : setImage(null);
+	}
+
+	function handleClipartNameChange(e) {
+		e.preventDefault();
+		setUploadName(e.target.value);
 	}
 
 	function handleCategoriesInput(e, value) {
@@ -172,63 +179,103 @@ export default function UploadForm() {
 
 	function handleTagSubmit() {
 		if (tagInput && !tags.includes(tagInput)) {
-			console.log();
 			setTags([...tags, tagInput]);
 			setTagInput('');
+		} else if (!tagInput) {
+			setUploadError({
+				severity: '',
+				message: 'Enter tag name first!',
+			});
+		} else if (tags.includes(tagInput)) {
+			setUploadError({
+				message: 'Tag already exists!',
+			});
+		} else {
+			setUploadError({
+				message: 'Error Adding the tag',
+			});
 		}
 	}
 
 	const handleTagDelete = (chipToDelete) => () => {
 		setTags((chips) => chips.filter((chip) => chip !== chipToDelete));
 		console.log('hello');
-		console.log(chipToDelete);
+		// console.log(chipToDelete);
 		// setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
 	};
 
 	const addClipart = (e) => {
 		e.preventDefault();
-		//joining the spaces in the name with a hyphen
-		let joinedImgName = uploadName.split(' ').join('-');
-		const uploadTask = storage.ref('cliparts/' + image.name).put(image);
-		uploadTask.on(
-			'state_changed',
-			(snapshot) => {
-				const currProgress = Math.round(
-					(snapshot.bytesTransferred / snapshot.totalBytes) * 100
-				);
-				console.log(currProgress);
-				setProgress(currProgress);
-			},
-			(error) => setUploadError(error.message),
-			() => {
-				//get the download url
+		if (!image) {
+			setUploadError({ message: 'Please add a clipart image' });
+		} else if (!uploadName) {
+			setUploadError({ message: 'Please enter clipart name!' });
+			return;
+		} else if (!uploadCategories) {
+			setUploadError({ message: 'Add at least one category' });
+			return;
+		} else if (!uploadSubcategories) {
+			setUploadError({ message: 'Add at least one sub-category' });
+			return;
+		} else if (!image) {
+			setUploadError({ message: 'Add clipart/image first' });
+			return;
+		} else {
+			//joining the spaces in the name with a hyphen
+			let joinedImgName = uploadName.split(' ').join('-');
+			const uploadTask = storage.ref('cliparts/' + image.name).put(image);
+			uploadTask.on(
+				'state_changed',
+				(snapshot) => {
+					const currProgress = Math.round(
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					);
+					console.log(currProgress);
+					setProgress(currProgress);
+				},
+				(error) => setUploadError(error.message),
+				() => {
+					//get the download url
 
-				uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-					db.collection('data').doc(joinedImgName).set({
-						uploadDate: firebase.firestore.FieldValue.serverTimestamp(),
-						imgName: joinedImgName,
-						size: imageSize,
-						type: imageType,
-						categories: uploadCategories,
-						subcategories: uploadSubcategories,
-						views: 10,
-						downloads: 10,
-						tags,
-						url,
+					uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+						db.collection('data').doc(joinedImgName).set({
+							uploadDate: firebase.firestore.FieldValue.serverTimestamp(),
+							imgName: joinedImgName,
+							size: imageSize,
+							type: imageType,
+							categories: uploadCategories,
+							subcategories: uploadSubcategories,
+							views: 10,
+							downloads: 10,
+							tags,
+							url,
+						});
+						setProgress(0);
+						setImage(null);
+						setUploadCategories([]);
+						setUploadSubcategories([]);
+						setUploadName('');
+						setTags([]);
 					});
-					setProgress(0);
-					console.log('File available at', url);
-				});
-			}
-		);
-		// ADDING DATA
-		// db.collection('data').doc('test').set({ test: 'testing document addition' });
-
-		//UPDATING AN ARRAY
-		const arrRef = db.collection('test').doc('testDoc');
-		arrRef.update({
-			tesArr: firebase.firestore.FieldValue.arrayUnion('testupdatearray2'),
-		});
+				}
+			);
+		}
+	};
+	const errorSnackbar = () => {
+		if (uploadError) {
+			return (
+				<Snackbar
+					open={true}
+					// open={snackbarOpen}
+					autoHideDuration={1000}
+					// onClose={handleSnackbarClose}
+				>
+					<Alert severity='error'>{uploadError.message}</Alert>
+				</Snackbar>
+			);
+		} else {
+			return null;
+		}
 	};
 
 	return (
@@ -238,11 +285,10 @@ export default function UploadForm() {
 				<h2>Add New Clipart</h2>
 				<form onSubmit={addClipart}>
 					<FormControl className={classes.field}>
-						<Input
+						<input
 							accept='image/*'
 							id='image-upload'
 							type='file'
-							multiple
 							className={classes.uploadInput}
 							onChange={handleImageUpload}
 						/>
@@ -355,8 +401,12 @@ export default function UploadForm() {
 					</Button>
 				</form>
 			</Paper>
-			<AddNewCategory existingCategories={categoriesArray} />
-			<AddNewSubCategories existingCategories={categoriesArray} />
+			<AddNewCategory
+				handleError={handleError}
+				existingCategories={categoriesArray}
+			/>
+
+			{errorSnackbar()}
 		</center>
 	);
 }

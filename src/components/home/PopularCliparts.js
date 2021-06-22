@@ -6,8 +6,9 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
 	cliparts: {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(4, minmax(300px, 1fr))',
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
 	},
 });
 
@@ -30,9 +31,7 @@ const PopularCliparts = () => {
 			.get()
 			.then(({ docs }) => {
 				docs.forEach((doc) => popArray.push(doc.data()));
-				console.log(docs[1].data());
 				setPopularCliparts(popArray);
-				console.log(popArray);
 			});
 	}
 

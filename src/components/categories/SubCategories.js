@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 	subCategoryList: {
 		display: 'flex',
 		flexWrap: 'wrap',
+		justifyContent: 'center',
 	},
 });
 
