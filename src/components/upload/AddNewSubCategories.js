@@ -124,6 +124,9 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 								});
 
 							setProgress(0);
+							setThumbnail(null);
+							setSelectedCategory('');
+							setSubCategoryInput('');
 							console.log('File available at', url);
 						});
 					}

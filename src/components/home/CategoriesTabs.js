@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoriesTabs = (props) => {
 	let history = props.history;
-	const [activeTab, setActiveTab] = useState(0);
+	const [activeTab, setActiveTab] = useState(null);
 	const [categoriesArray, setCategoriesArray] = useState([]);
 
 	const classes = useStyles();

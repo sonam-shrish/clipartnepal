@@ -65,13 +65,6 @@ const AllCliparts = () => {
 		<div className={classes.clipartsContainer}>
 			{cliparts.map(({ imgName, url, type }) => (
 				<Card className={classes.root}>
-					<center>
-						HEllo
-						<img className={classes.media} alt={imgName} src={url} />
-					</center>
-
-					<Typography>{imgName}</Typography>
-
 					<IconButton aria-label='delete'>
 						<Delete
 							onClick={() => {
@@ -79,6 +72,11 @@ const AllCliparts = () => {
 							}}
 						/>
 					</IconButton>
+					<center>
+						<img className={classes.media} alt={imgName} src={url} />
+					</center>
+
+					<Typography>{imgName}</Typography>
 				</Card>
 			))}
 		</div>

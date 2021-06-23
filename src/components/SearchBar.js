@@ -27,7 +27,6 @@ function SearchBar({ history }) {
 
 	function handleSearchSubmit(e) {
 		e.preventDefault();
-		history.push('/search');
 		const resultsArray = [];
 		const results = db
 			.collection('data')
@@ -75,6 +74,16 @@ function SearchBar({ history }) {
 				))}
 			</div>
 			{error != 'empty' ? <>No Results</> : null}
+
+			<br />
+			<br />
+
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 		</>
 	);
 }

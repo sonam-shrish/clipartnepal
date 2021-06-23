@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
 	Toolbar,
-	Typography,
 	AppBar,
 	useScrollTrigger,
 	Tabs,
@@ -89,7 +88,7 @@ const Header = () => {
 								label='Add Clipart'
 								className={classes.tab}
 								component={Link}
-								to='/admin/add-clipart'
+								to='/admin'
 							/>
 						</Tabs>
 					</Toolbar>

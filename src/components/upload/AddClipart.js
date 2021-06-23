@@ -5,7 +5,6 @@ import {
 	TextField,
 	Button,
 	FormControl,
-	Input,
 	Chip,
 	Paper,
 	Snackbar,
@@ -44,9 +43,7 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function UploadForm() {
-	console.log();
-
+export default function AddClipart() {
 	const [categoriesArray, setCategoriesArray] = useState([]);
 	const [subcategoriesArray, setSubcategoriesArray] = useState([]);
 	const [image, setImage] = useState(null);
