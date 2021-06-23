@@ -154,6 +154,12 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 					className={classes.uploadInput}
 					onChange={handleThumbnailUpload}
 				/>
+				{progress ? (
+					<>
+						Upload Progress:{' '}
+						<progress className={classes.progress} max='100' value={progress} />{' '}
+					</>
+				) : null}
 			</FormControl>
 			<FormControl fullWidth className={classes.field}>
 				<label htmlFor='thumbnail-upload'>

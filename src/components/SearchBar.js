@@ -74,15 +74,6 @@ function SearchBar({ history }) {
 				))}
 			</div>
 			{error != 'empty' ? <>No Results</> : null}
-
-			<br />
-			<br />
-
-			<br />
-			<br />
-			<br />
-			<br />
-			<br />
 			<br />
 		</>
 	);

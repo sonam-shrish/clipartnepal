@@ -11,11 +11,25 @@ import SearchBar from './components/SearchBar';
 import CategoriesTabs from './components/home/CategoriesTabs';
 import SubCategories from './components/categories/SubCategories';
 import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList';
-// import Footer from './ui/Footer';
 
 import Login from './components/admin/Login.js';
 
 function App() {
+	// const errorSnackbar = () => {
+	// 	if (uploadError) {
+	// 		return (
+	// 			<Snackbar
+	// 				open={snackbarOpen}
+	// 				autoHideDuration={1000}
+	// 				onClose={handleSnackbarClose}
+	// 			>
+	// 				<Alert severity='error'>{uploadError.message}</Alert>
+	// 			</Snackbar>
+	// 		);
+	// 	} else {
+	// 		return null;
+	// 	}
+	// };
 	return (
 		<ThemeProvider theme={theme}>
 			<div className='App'>

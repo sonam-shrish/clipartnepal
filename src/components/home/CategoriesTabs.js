@@ -4,8 +4,6 @@ import { db } from '../../firebase';
 
 import {
 	Toolbar,
-	Typography,
-	AppBar,
 	useScrollTrigger,
 	Tabs,
 	Tab,

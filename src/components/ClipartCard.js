@@ -114,11 +114,11 @@ export default function ClipartCard(props) {
 						<strong>{imgName}</strong>
 					</Typography>
 
-					<a download href={url} className={classes.downloadBtn}>
-						<IconButton className={classes.downloadBtn} aria-label='download'>
+					<IconButton className={classes.downloadBtn} aria-label='download'>
+						<a download href={url} className={classes.downloadBtn}>
 							<CloudDownload />
-						</IconButton>
-					</a>
+						</a>
+					</IconButton>
 				</CardActions>
 			</Card>
 			{/* THE MODAL */}
@@ -138,14 +138,11 @@ export default function ClipartCard(props) {
 					<CardActions disableSpacing>
 						<b>{imgName}</b>
 						<div className={classes.actionBtns}>
-							<a download href={url}>
-								<IconButton
-									className={classes.downloadBtn}
-									aria-label='download'
-								>
-									<CloudDownload />
-								</IconButton>
-							</a>
+							<IconButton className={classes.downloadBtn} aria-label='download'>
+								<a download href={url}></a>
+
+								<CloudDownload />
+							</IconButton>
 						</div>
 					</CardActions>
 					<CardContent vlassName={classes.left}>

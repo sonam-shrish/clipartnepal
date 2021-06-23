@@ -18,22 +18,20 @@ const PopularCliparts = () => {
 	const [popularCliparts, setPopularCliparts] = useState([]);
 
 	useEffect(() => {
-		// getData();
+		function getDataArray() {
+			const popArray = [];
+			const popularArr = db
+				.collection('data')
+				.orderBy('views', 'desc')
+				.limit(8)
+				.get()
+				.then(({ docs }) => {
+					docs.forEach((doc) => popArray.push(doc.data()));
+					setPopularCliparts(popArray);
+				});
+		}
 		getDataArray();
 	}, []);
-
-	function getDataArray() {
-		const popArray = [];
-		const popularArr = db
-			.collection('data')
-			.orderBy('views', 'desc')
-			.limit(8)
-			.get()
-			.then(({ docs }) => {
-				docs.forEach((doc) => popArray.push(doc.data()));
-				setPopularCliparts(popArray);
-			});
-	}
 
 	return (
 		<>

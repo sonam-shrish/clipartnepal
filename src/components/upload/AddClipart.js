@@ -10,7 +10,7 @@ import {
 	Snackbar,
 } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
-import { CloudUploadIcon, PhotoCamera, Done } from '@material-ui/icons';
+import { PhotoCamera } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { db, storage } from '../../firebase';
 import AddNewCategory from './AddNewCategory';
@@ -80,6 +80,7 @@ export default function AddClipart() {
 		setUploadError(null);
 		setCategoriesUpdated(false);
 	}, []);
+
 	useEffect(() => {
 		function getSubCategoriesArray() {
 			const subCategoriesArr = [];
@@ -127,25 +128,6 @@ export default function AddClipart() {
 		setSnackbarOpen(true);
 	}
 
-	//if I add a new category then the category list should be updated in all the forms so, for that I have to rerender the whole component
-	function categorieUpdated() {
-		setCategoriesUpdated(true);
-	}
-
-	const getData = () => {
-		//collectionRef
-		const collRef = db.collection('data');
-		collRef.get().then((coll) => {
-			const docsArray = coll.docs;
-			// console.log(coll.docs);
-			docsArray.forEach((doc) => {
-				// console.log(doc.data());
-			});
-		});
-		// const docRef = db.collection('data').doc('data1');
-		// docRef.get().then((doc) => console.log(doc.data()));
-	};
-
 	////////////////////////////////////////////INPUT FIELD CHANGE HANDLER/////////////////////////////
 	function handleImageUpload(e) {
 		if (e.target.files[0]) {
@@ -186,6 +168,7 @@ export default function AddClipart() {
 	}
 
 	function handleTagSubmit() {
+		//tag submit
 		if (tagInput && !tags.includes(tagInput)) {
 			setTags([...tags, tagInput]);
 			setTagInput('');
@@ -207,13 +190,11 @@ export default function AddClipart() {
 
 	const handleTagDelete = (chipToDelete) => () => {
 		setTags((chips) => chips.filter((chip) => chip !== chipToDelete));
-		console.log('hello');
-		// console.log(chipToDelete);
-		// setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
 	};
 
 	const addClipart = (e) => {
 		e.preventDefault();
+		//form validation
 		if (!image) {
 			setUploadError({ message: 'Please add a clipart image' });
 			setSnackbarOpen(true);
@@ -298,7 +279,7 @@ export default function AddClipart() {
 
 	return (
 		<center>
-			<br></br>
+			<br />
 			<Paper className={classes.form}>
 				<h2>Add New Clipart</h2>
 				<form onSubmit={addClipart}>

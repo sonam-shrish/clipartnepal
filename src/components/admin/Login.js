@@ -76,48 +76,50 @@ function Auth({ history }) {
 	}
 
 	return (
-		<div className='form'>
-			{!user ? (
-				<div className={classes.form}>
-					<form>
-						<center>
-							<h2>Enter the site as an admin</h2>
+		<center>
+			<div className='form'>
+				{!user ? (
+					<div className={classes.form}>
+						<form>
+							<center>
+								<h2>Enter the site as an admin</h2>
 
-							<Input
-								fullWidth
-								type='email'
-								placeholder='Email'
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-							/>
-							<Input
-								fullWidth
-								type='password'
-								placeholder='Password'
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-							/>
-							<Button type='submit' onClick={handleSignIn}>
-								Sign In
-							</Button>
-						</center>
-					</form>
-				</div>
-			) : null}
+								<Input
+									fullWidth
+									type='email'
+									placeholder='Email'
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+								/>
+								<Input
+									fullWidth
+									type='password'
+									placeholder='Password'
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+								/>
+								<Button type='submit' onClick={handleSignIn}>
+									Sign In
+								</Button>
+							</center>
+						</form>
+					</div>
+				) : null}
 
-			<Toolbar>
-				<Tabs
-					value={activeTab}
-					onChange={handleActiveTab}
-					variant='scrollable'
-					scrollButtons='on'
-				>
-					<Tab label='Add Clipart' />
-					<Tab label='Delete Clipart' />
-				</Tabs>
-			</Toolbar>
-			{adminTasks()}
-		</div>
+				<Toolbar>
+					<Tabs
+						value={activeTab}
+						onChange={handleActiveTab}
+						variant='scrollable'
+						scrollButtons='on'
+					>
+						<Tab label='Add Clipart' />
+						<Tab label='Delete Clipart' />
+					</Tabs>
+				</Toolbar>
+				{adminTasks()}
+			</div>
+		</center>
 	);
 }
 
