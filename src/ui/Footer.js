@@ -6,24 +6,27 @@ import CopyrightIcon from '@material-ui/icons/Copyright';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
-	footer: {
-		bottom: '0',
-		width: '100vw',
-	},
+	footer: { position: 'absolute', bottom: '0', width: '100%' },
 });
 
 const Footer = () => {
 	const classes = useStyles();
 
 	return (
-		<footer className={classes.footer}>
-			<center>
-				<CopyrightIcon /> All Rights Reserved.{' '}
-				<Link to='/' style={{ textDecoration: 'none' }}>
-					clipartnepal.com
-				</Link>
-			</center>
-		</footer>
+		<>
+			{/* //{' '}
+			<footer className={classes.footer}>
+				//{' '}
+				<center>
+					// <CopyrightIcon /> All Rights Reserved. //{' '}
+					<Link to='/' style={{ textDecoration: 'none' }}>
+						// clipartnepal.com //{' '}
+					</Link>
+					//{' '}
+				</center>
+				//{' '}
+			</footer> */}
+		</>
 	);
 };
 

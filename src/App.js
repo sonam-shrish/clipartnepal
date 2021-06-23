@@ -22,12 +22,12 @@ function App() {
 			<div className='App'>
 				<BrowserRouter>
 					<Header />
-					Hello
 					{/* <AddClipart /> */}
 					{/* <Categories /> */}
 					{/* <IndividualSubCategoryList /> */}
-					<SearchBar />
 					<Route path='/' component={CategoriesTabs} />
+					<Route exact path='/' component={SearchBar} />
+					<Route exact path='/search' component={SearchBar} />
 					<Route exact path='/' component={PopularCliparts} />
 					<Route exact path='/' component={RecentCliparts} />
 					<Route exact path='/categories/:catName' component={SubCategories} />
@@ -40,6 +40,8 @@ function App() {
 					<Route path='/admin/add-clipart' component={AddClipart} />
 					<Route path='/admin/all-cliparts' component={AllCliparts} />
 					<Footer />
+
+					<AllCliparts />
 				</BrowserRouter>
 			</div>
 		</ThemeProvider>

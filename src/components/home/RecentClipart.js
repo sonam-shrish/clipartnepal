@@ -27,7 +27,7 @@ const RecentCliparts = () => {
 		const popArray = [];
 		const recentArr = db
 			.collection('data')
-			.orderBy('createdAt', 'desc')
+			.orderBy('uploadDate', 'desc')
 			.limit(8)
 			.get()
 			.then(({ docs }) => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { db } from '../../firebase';
+import { db, storage } from '../../firebase';
 
 import { makeStyles, IconButton, Typography, Card } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
@@ -42,12 +42,28 @@ const AllCliparts = () => {
 			});
 	}
 
-	function handleClipartDelete(imgName) {
+	function handleClipartDelete(imgName, type) {
+		storage
+			.ref()
+			.child('cliparts/' + imgName + '.' + type)
+			.delete()
+			.then(() => console.log('deletion successful'))
+			.catch((error) => console.log('deletion error', error));
+		db.collection('data')
+			.doc(imgName)
+			.delete()
+			.then(() => {
+				console.log('clipart doc successfully deleted!');
+			})
+			.catch((error) => {
+				console.error('Error removing clipart: ', error);
+			});
+
 		console.log(imgName);
 	}
 	return (
 		<div className={classes.clipartsContainer}>
-			{cliparts.map(({ imgName, url }) => (
+			{cliparts.map(({ imgName, url, type }) => (
 				<Card className={classes.root}>
 					<center>
 						HEllo
@@ -57,7 +73,11 @@ const AllCliparts = () => {
 					<Typography>{imgName}</Typography>
 
 					<IconButton aria-label='delete'>
-						<Delete onClick={handleClipartDelete(imgName)} />
+						<Delete
+							onClick={() => {
+								handleClipartDelete(imgName, type);
+							}}
+						/>
 					</IconButton>
 				</Card>
 			))}

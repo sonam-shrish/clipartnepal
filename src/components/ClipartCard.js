@@ -1,9 +1,11 @@
 //Complete card small
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Favorite, CloudDownload } from '@material-ui/icons';
+import { CloudDownload } from '@material-ui/icons';
 import { Modal, CardContent, Typography } from '@material-ui/core';
 import { IconButton, Card, CardActions, Chip, Paper } from '@material-ui/core';
+
+import { db } from '../firebase';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -46,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 	chip: {
 		margin: '5px',
 	},
+
 	'@global': {
 		'*::-webkit-scrollbar': {
 			width: '0.2em',
@@ -86,9 +89,17 @@ export default function ClipartCard(props) {
 		setOpen(false);
 	};
 
+	function handleViews() {
+		let newViews = views + 1;
+		console.log(views);
+		db.collection('data')
+			.doc(imgName)
+			.set({ ...props.clipartInfo, views: newViews });
+	}
+
 	return (
 		<>
-			<Card className={classes.root}>
+			<Card className={classes.root} onClick={handleViews}>
 				<center>
 					<img
 						className={classes.media}
@@ -99,14 +110,15 @@ export default function ClipartCard(props) {
 				</center>
 
 				<CardActions disableSpacing>
-					<IconButton aria-label='add to favorites'>
-						<Favorite />
-					</IconButton>
-					<Typography>{imgName}</Typography>
+					<Typography>
+						<strong>{imgName}</strong>
+					</Typography>
 
-					<IconButton className={classes.downloadBtn} aria-label='download'>
-						<CloudDownload />
-					</IconButton>
+					<a download href={url} className={classes.downloadBtn}>
+						<IconButton className={classes.downloadBtn} aria-label='download'>
+							<CloudDownload />
+						</IconButton>
+					</a>
 				</CardActions>
 			</Card>
 			{/* THE MODAL */}
@@ -126,10 +138,6 @@ export default function ClipartCard(props) {
 					<CardActions disableSpacing>
 						<b>{imgName}</b>
 						<div className={classes.actionBtns}>
-							<IconButton aria-label='add to favorites'>
-								<Favorite />
-							</IconButton>
-
 							<a download href={url}>
 								<IconButton
 									className={classes.downloadBtn}
@@ -142,9 +150,9 @@ export default function ClipartCard(props) {
 					</CardActions>
 					<CardContent vlassName={classes.left}>
 						<ul className={classes.list}>
-							<li>Views: {views}</li>
+							<li>Views: {views + 1}</li>
 							<li>Downloads {downloads}</li>
-							<li>Size: {size}</li>
+							<li>Size: {Number.parseFloat(size).toFixed(2) + 'MB'}</li>
 							<li>Type: {type} </li>
 							<li>
 								<Paper className={classes.paper}>

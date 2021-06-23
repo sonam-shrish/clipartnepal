@@ -17,7 +17,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
 	toolbarMargin: {
-		...theme.mixins.toolbar,
+		marginBottom: '10px',
 	},
 	logo: {
 		height: '7em',

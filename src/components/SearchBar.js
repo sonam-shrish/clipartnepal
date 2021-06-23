@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { db } from '../firebase';
 
@@ -8,22 +9,25 @@ import './SearchBar.css';
 
 const useStyles = makeStyles({
 	cliparts: {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(4, minmax(300px, 1fr))',
+		display: 'flex',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
 	},
 	searchForm: {
 		marginTop: '2em',
 	},
 });
 
-function SearchBar() {
+function SearchBar({ history }) {
 	const [searchText, setSearchText] = useState('');
 	const [results, setResults] = useState([]);
+	const [error, setError] = useState('empty');
 
 	const classes = useStyles();
 
 	function handleSearchSubmit(e) {
 		e.preventDefault();
+		history.push('/search');
 		const resultsArray = [];
 		const results = db
 			.collection('data')
@@ -31,6 +35,9 @@ function SearchBar() {
 			.where('tags', 'array-contains', searchText)
 			.get();
 		results.then(({ docs }) => {
+			if (!docs[0]) {
+				setError({ message: 'No results found' });
+			}
 			docs.forEach((result) => resultsArray.push(result.data()));
 			console.log(resultsArray);
 
@@ -67,8 +74,9 @@ function SearchBar() {
 					<ClipartCard clipartInfo={clipart} />
 				))}
 			</div>
+			{error != 'empty' ? <>No Results</> : null}
 		</>
 	);
 }
 
-export default SearchBar;
+export default withRouter(SearchBar);

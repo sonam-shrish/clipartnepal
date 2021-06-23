@@ -61,6 +61,7 @@ export default function UploadForm() {
 	const [progress, setProgress] = useState(0);
 	const [categoriesUpdated, setCategoriesUpdated] = useState(false);
 	const [uploadError, setUploadError] = useState(null);
+	const [snackbarOpen, setSnackbarOpen] = useState(false);
 
 	const classes = useStyles();
 
@@ -126,7 +127,7 @@ export default function UploadForm() {
 	// HANDLE ALL KINDS OF UPLOAD ERRORS
 	function handleError(error) {
 		setUploadError(error);
-		console.log(error);
+		setSnackbarOpen(true);
 	}
 
 	//if I add a new category then the category list should be updated in all the forms so, for that I have to rerender the whole component
@@ -152,12 +153,22 @@ export default function UploadForm() {
 	function handleImageUpload(e) {
 		if (e.target.files[0]) {
 			let img = e.target.files[0];
+			let imgType = img.type.split('/')[1];
 			setImage(img);
 			setImageSize(img.size / (1024 * 1024));
-			setImageType(img.type);
+
+			setImageType(imgType);
 		}
 		e.target.files[0] ? setImage(e.target.files[0]) : setImage(null);
 	}
+
+	const handleSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setSnackbarOpen(false);
+	};
 
 	function handleClipartNameChange(e) {
 		e.preventDefault();
@@ -208,22 +219,33 @@ export default function UploadForm() {
 		e.preventDefault();
 		if (!image) {
 			setUploadError({ message: 'Please add a clipart image' });
+			setSnackbarOpen(true);
 		} else if (!uploadName) {
 			setUploadError({ message: 'Please enter clipart name!' });
+			setSnackbarOpen(true);
+
 			return;
 		} else if (!uploadCategories) {
 			setUploadError({ message: 'Add at least one category' });
+			setSnackbarOpen(true);
+
 			return;
 		} else if (!uploadSubcategories) {
 			setUploadError({ message: 'Add at least one sub-category' });
+			setSnackbarOpen(true);
+
 			return;
 		} else if (!image) {
 			setUploadError({ message: 'Add clipart/image first' });
+			setSnackbarOpen(true);
+
 			return;
 		} else {
 			//joining the spaces in the name with a hyphen
 			let joinedImgName = uploadName.split(' ').join('-');
-			const uploadTask = storage.ref('cliparts/' + image.name).put(image);
+			const uploadTask = storage
+				.ref('cliparts/' + uploadName + '.' + imageType)
+				.put(image);
 			uploadTask.on(
 				'state_changed',
 				(snapshot) => {
@@ -265,10 +287,9 @@ export default function UploadForm() {
 		if (uploadError) {
 			return (
 				<Snackbar
-					open={true}
-					// open={snackbarOpen}
+					open={snackbarOpen}
 					autoHideDuration={1000}
-					// onClose={handleSnackbarClose}
+					onClose={handleSnackbarClose}
 				>
 					<Alert severity='error'>{uploadError.message}</Alert>
 				</Snackbar>
