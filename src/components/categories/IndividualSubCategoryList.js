@@ -8,7 +8,10 @@ import ClipartCard from '../ClipartCard';
 const useStyles = makeStyles({
 	cliparts: {
 		display: 'grid',
-		gridTemplateColumns: 'repeat(4, minmax(300px, 1fr))',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 150px))',
+		maxWidth: '980px',
+		gap: '15px',
+		margin: 'auto',
 	},
 });
 

@@ -11,8 +11,10 @@ import SearchBar from './components/SearchBar';
 import CategoriesTabs from './components/home/CategoriesTabs';
 import SubCategories from './components/categories/SubCategories';
 import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList';
-
+//test
+import ClipartDetails from './components/ClipartDetails';
 import Login from './components/admin/Login.js';
+import RelatedCliparts from './components/RelatedCliparts';
 
 function App() {
 	// const errorSnackbar = () => {
@@ -33,24 +35,25 @@ function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className='App'>
-				<BrowserRouter>
-					<Header />
+				<Header />
+				<RelatedCliparts />
 
-					<Route path='/' component={CategoriesTabs} />
-					<Route exact path='/' component={SearchBar} />
-					<Route exact path='/search' component={SearchBar} />
-					<Route exact path='/' component={PopularCliparts} />
-					<Route exact path='/' component={RecentCliparts} />
-					<Route exact path='/categories/:catName' component={SubCategories} />
-					<Route
-						exact
-						path='/categories/:catName/:subCatName'
-						component={IndividualSubCategoryList}
-					/>
-					<Route exact path='/admin' component={Login} />
+				<Route path='/' component={CategoriesTabs} />
+				<Route exact path='/' component={SearchBar} />
 
-					{/* <Footer /> */}
-				</BrowserRouter>
+				<Route exact path='/search' component={SearchBar} />
+				<Route exact path='/' component={PopularCliparts} />
+				<Route exact path='/' component={RecentCliparts} />
+				<Route exact path='/categories/:catName' component={SubCategories} />
+				<Route
+					exact
+					path='/categories/:catName/:subCatName'
+					component={IndividualSubCategoryList}
+				/>
+				<Route exact path='/admin' component={Login} />
+				<Route path='/details/:imgName' component={ClipartDetails} />
+
+				{/* <Footer /> */}
 			</div>
 		</ThemeProvider>
 	);

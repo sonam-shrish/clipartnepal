@@ -30,8 +30,7 @@ function SearchBar({ history }) {
 		const resultsArray = [];
 		const results = db
 			.collection('data')
-			// .where('imgName', '==', 'testimg')
-			.where('tags', 'array-contains', searchText)
+			.where('tags', 'array-contains', searchText.toLowerCase())
 			.get();
 		results.then(({ docs }) => {
 			if (!docs[0]) {
@@ -73,7 +72,7 @@ function SearchBar({ history }) {
 					<ClipartCard clipartInfo={clipart} />
 				))}
 			</div>
-			{error != 'empty' ? <>No Results</> : null}
+			{error != 'empty' ? <>No Results for {searchText}</> : null}
 			<br />
 		</>
 	);

@@ -1,4 +1,5 @@
 //Complete card small
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CloudDownload } from '@material-ui/icons';
@@ -6,13 +7,15 @@ import { Modal, CardContent, Typography } from '@material-ui/core';
 import { IconButton, Card, CardActions, Chip, Paper } from '@material-ui/core';
 
 import { db } from '../firebase';
+import { withRouter, Route, Link } from 'react-router-dom';
+
+import ClipartDetails from './ClipartDetails';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: 300,
-		maxHeight: '400px',
+		maxWidth: '150px',
+		height: '150px',
 		overflow: 'auto',
-		margin: '10px 15px',
 	},
 	media: {
 		objectFit: 'contain',
@@ -63,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function ClipartCard(props) {
+function ClipartCard(props) {
 	const classes = useStyles();
 	const {
 		imgName,
@@ -97,30 +100,29 @@ export default function ClipartCard(props) {
 			.set({ ...props.clipartInfo, views: newViews });
 	}
 
+	// Clipart Details
+
 	return (
 		<>
-			<Card className={classes.root} onClick={handleViews}>
-				<center>
-					<img
-						className={classes.media}
-						alt={imgName}
-						src={url}
-						onClick={handleOpen}
-					/>
-				</center>
+			<Link to={'/details/' + imgName}>
+				<Card className={classes.root}>
+					<center>
+						<img className={classes.media} alt={imgName} src={url} />
+					</center>
 
-				<CardActions disableSpacing>
+					{/* <CardActions disableSpacing>
 					<Typography>
 						<strong>{imgName}</strong>
 					</Typography>
 
-					<IconButton className={classes.downloadBtn} aria-label='download'>
-						<a download href={url} className={classes.downloadBtn}>
+					<a download href={url} className={classes.downloadBtn}>
+						<IconButton className={classes.downloadBtn} aria-label='download'>
 							<CloudDownload />
-						</a>
-					</IconButton>
-				</CardActions>
-			</Card>
+						</IconButton>
+					</a>
+				</CardActions> */}
+				</Card>
+			</Link>
 			{/* THE MODAL */}
 
 			<Modal
@@ -138,11 +140,14 @@ export default function ClipartCard(props) {
 					<CardActions disableSpacing>
 						<b>{imgName}</b>
 						<div className={classes.actionBtns}>
-							<IconButton className={classes.downloadBtn} aria-label='download'>
-								<a download href={url}></a>
-
-								<CloudDownload />
-							</IconButton>
+							<a download to={url} target='_self'>
+								<IconButton
+									className={classes.downloadBtn}
+									aria-label='download'
+								>
+									<CloudDownload />
+								</IconButton>
+							</a>
 						</div>
 					</CardActions>
 					<CardContent vlassName={classes.left}>
@@ -177,3 +182,5 @@ export default function ClipartCard(props) {
 		</>
 	);
 }
+
+export default withRouter(ClipartCard);

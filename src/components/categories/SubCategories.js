@@ -12,14 +12,15 @@ import IndividualSubCategoryList from './IndividualSubCategoryList';
 
 const useStyles = makeStyles({
 	subCategoryList: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center',
+		display: 'grid',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 150px))',
+		maxWidth: '980px',
+		gap: '15px',
+		margin: 'auto',
 	},
 });
 
 const SubCategories = (props) => {
-	console.log('rendering');
 	const [subCatData, setSubCatData] = useState(null);
 
 	let categoryName = props.match.params.catName;
@@ -35,13 +36,10 @@ const SubCategories = (props) => {
 			.doc(categoryName)
 			.get()
 			.then((doc) => {
-				console.log(doc);
 				if (doc.exists) {
 					const subCatArray = doc.data().subcategories;
 					console.log(doc.data().subcategories);
 					setSubCatData(subCatArray);
-					console.log(doc);
-					console.log('yeah found');
 				} else {
 					console.log('no results');
 				}

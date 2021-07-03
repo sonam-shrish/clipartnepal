@@ -6,9 +6,15 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
 	cliparts: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center',
+		display: 'grid',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 150px))',
+		maxWidth: '980px',
+		gap: '15px',
+		margin: 'auto',
+	},
+	clipart: {
+		width: '150px',
+		height: '150px',
 	},
 });
 
@@ -38,7 +44,7 @@ const PopularCliparts = () => {
 			<h2>Popular Cliparts</h2>
 			<div className={classes.cliparts}>
 				{popularCliparts.map((clipart) => (
-					<ClipartCard clipartInfo={clipart} />
+					<ClipartCard className={classes.clipart} clipartInfo={clipart} />
 				))}
 			</div>
 		</>

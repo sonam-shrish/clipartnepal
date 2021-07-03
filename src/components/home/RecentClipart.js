@@ -6,9 +6,18 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
 	cliparts: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center',
+		display: 'grid',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 150px))',
+		maxWidth: '980px',
+		gap: '15px',
+		margin: 'auto',
+	},
+	clipart: {
+		width: '150px',
+		height: '150px',
+	},
+	recent: {
+		marginTop: '50px',
 	},
 });
 
@@ -28,7 +37,6 @@ const RecentCliparts = () => {
 				.then(({ docs }) => {
 					docs.forEach((doc) => popArray.push(doc.data()));
 					setRecentCliparts(popArray);
-					console.log(popArray);
 				});
 		}
 		getDataArray();
@@ -36,10 +44,10 @@ const RecentCliparts = () => {
 
 	return (
 		<>
-			<h2>Recent Cliparts</h2>
+			<h2 className={classes.recent}>Recent Cliparts</h2>
 			<div className={classes.cliparts}>
 				{recentCliparts.map((clipart) => (
-					<ClipartCard clipartInfo={clipart} />
+					<ClipartCard className={classes.clipart} clipartInfo={clipart} />
 				))}
 			</div>
 		</>

@@ -60,6 +60,10 @@ export default function AddClipart() {
 	const [uploadError, setUploadError] = useState(null);
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
 
+	//test code
+	const [downloadUrl, setDownloadUrl] = useState('');
+	// test code end
+
 	const classes = useStyles();
 
 	useEffect(() => {
@@ -248,14 +252,19 @@ export default function AddClipart() {
 							views: 10,
 							downloads: 10,
 							tags,
-							url,
+							url: url,
 						});
+
 						setProgress(0);
 						setImage(null);
 						setUploadCategories([]);
 						setUploadSubcategories([]);
 						setUploadName('');
 						setTags([]);
+
+						//test code
+						setDownloadUrl(url);
+						// test code end
 					});
 				}
 			);
@@ -279,6 +288,9 @@ export default function AddClipart() {
 
 	return (
 		<center>
+			<a download href={downloadUrl}>
+				Download huna paryo yaar
+			</a>
 			<br />
 			<Paper className={classes.form}>
 				<h2>Add New Clipart</h2>
