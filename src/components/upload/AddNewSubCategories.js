@@ -47,8 +47,7 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 		if (selectedCategory) {
 			db.collection('categories')
 				.doc(selectedCategory)
-				.get()
-				.then((doc) => {
+				.onSnapshot((doc) => {
 					const subCategories = [];
 
 					console.log(doc.data());

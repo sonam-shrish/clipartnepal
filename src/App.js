@@ -14,7 +14,6 @@ import IndividualSubCategoryList from './components/categories/IndividualSubCate
 //test
 import ClipartDetails from './components/ClipartDetails';
 import Login from './components/admin/Login.js';
-import RelatedCliparts from './components/RelatedCliparts';
 
 function App() {
 	// const errorSnackbar = () => {
@@ -36,7 +35,6 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<div className='App'>
 				<Header />
-				<RelatedCliparts />
 
 				<Route path='/' component={CategoriesTabs} />
 				<Route exact path='/' component={SearchBar} />

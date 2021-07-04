@@ -159,9 +159,11 @@ function ClipartCard(props) {
 							<li>
 								<Paper className={classes.paper}>
 									<p>Sub Category</p>
-									{subcategories.map((category) => (
-										<Chip className={classes.chip} label={category} />
-									))}
+									{subcategories
+										? subcategories.map((category) => (
+												<Chip className={classes.chip} label={category} />
+										  ))
+										: null}
 								</Paper>
 							</li>
 							<li>

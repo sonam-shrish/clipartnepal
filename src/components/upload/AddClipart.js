@@ -92,8 +92,8 @@ export default function AddClipart() {
 				uploadCategories.forEach((cat) => {
 					db.collection('categories')
 						.doc(cat)
-						.get()
-						.then((doc) => {
+
+						.onSnapshot((doc) => {
 							const individualSubcats = doc.data().subcategories;
 							if (individualSubcats) {
 								individualSubcats.forEach((subCat) => {
@@ -288,10 +288,8 @@ export default function AddClipart() {
 
 	return (
 		<center>
-			<a download href={downloadUrl}>
-				Download huna paryo yaar
-			</a>
 			<br />
+
 			<Paper className={classes.form}>
 				<h2>Add New Clipart</h2>
 				<form onSubmit={addClipart}>

@@ -11,6 +11,7 @@ const useStyles = makeStyles({
 		maxWidth: '980px',
 		gap: '15px',
 		margin: 'auto',
+		justifyContent: 'center',
 	},
 	clipart: {
 		width: '150px',
@@ -32,7 +33,7 @@ const RecentCliparts = () => {
 			const recentArr = db
 				.collection('data')
 				.orderBy('uploadDate', 'desc')
-				.limit(8)
+				.limit(18)
 				.get()
 				.then(({ docs }) => {
 					docs.forEach((doc) => popArray.push(doc.data()));

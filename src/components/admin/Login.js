@@ -104,20 +104,22 @@ function Auth({ history }) {
 							</center>
 						</form>
 					</div>
-				) : null}
-
-				<Toolbar>
-					<Tabs
-						value={activeTab}
-						onChange={handleActiveTab}
-						variant='scrollable'
-						scrollButtons='on'
-					>
-						<Tab label='Add Clipart' />
-						<Tab label='Delete Clipart' />
-					</Tabs>
-				</Toolbar>
-				{adminTasks()}
+				) : (
+					<>
+						<Toolbar>
+							<Tabs
+								value={activeTab}
+								onChange={handleActiveTab}
+								variant='scrollable'
+								scrollButtons='on'
+							>
+								<Tab label='Add Clipart' />
+								<Tab label='Delete Clipart' />
+							</Tabs>
+						</Toolbar>
+						{adminTasks()}
+					</>
+				)}
 			</div>
 		</center>
 	);

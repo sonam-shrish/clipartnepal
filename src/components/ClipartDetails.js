@@ -10,7 +10,6 @@ import {
 	Chip,
 } from '@material-ui/core';
 import { CloudDownload } from '@material-ui/icons';
-import RelatedCliparts from './RelatedCliparts';
 import RecentCliparts from './home/RecentClipart';
 import PopularCliparts from './home/PopularCliparts';
 import ClipartCard from './ClipartCard';
@@ -22,6 +21,7 @@ const useStyles = makeStyles({
 		maxWidth: '980px',
 		gap: '15px',
 		margin: 'auto',
+		justifyContent: 'center',
 	},
 	clipart: {
 		width: '150px',
@@ -58,9 +58,12 @@ const ClipartDetails = (props) => {
 					setImgData(doc.data());
 
 					// related cliparts
-					const relatedArray = [];
+					const relatedArray = [''];
 					db.collection('data')
-						.where('tags', 'array-contains-any', doc.data().tags)
+						.where('tags', 'array-contains-any', [
+							...doc.data().tags,
+							'test string to keep it non empty',
+						])
 						.limit(8)
 						.get()
 						.then(({ docs }) => {

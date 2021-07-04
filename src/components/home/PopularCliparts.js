@@ -9,6 +9,7 @@ const useStyles = makeStyles({
 		display: 'grid',
 		gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 150px))',
 		maxWidth: '980px',
+		justifyContent: 'center',
 		gap: '15px',
 		margin: 'auto',
 	},
@@ -29,7 +30,7 @@ const PopularCliparts = () => {
 			const popularArr = db
 				.collection('data')
 				.orderBy('views', 'desc')
-				.limit(8)
+				.limit(18)
 				.get()
 				.then(({ docs }) => {
 					docs.forEach((doc) => popArray.push(doc.data()));
