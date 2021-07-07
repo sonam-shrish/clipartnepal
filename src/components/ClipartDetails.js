@@ -10,7 +10,7 @@ import {
 	Chip,
 } from '@material-ui/core';
 import { CloudDownload } from '@material-ui/icons';
-import RecentCliparts from './home/RecentClipart';
+import RecentCliparts from './home/RecentCliparts';
 import PopularCliparts from './home/PopularCliparts';
 import ClipartCard from './ClipartCard';
 

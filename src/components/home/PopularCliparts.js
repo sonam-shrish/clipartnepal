@@ -19,35 +19,19 @@ const useStyles = makeStyles({
 	},
 });
 
-const PopularCliparts = () => {
+const PopularCliparts = ({ popularCliparts }) => {
 	const classes = useStyles();
-
-	const [popularCliparts, setPopularCliparts] = useState([]);
-
-	useEffect(() => {
-		function getDataArray() {
-			const popArray = [];
-			const popularArr = db
-				.collection('data')
-				.orderBy('views', 'desc')
-				.limit(18)
-				.get()
-				.then(({ docs }) => {
-					docs.forEach((doc) => popArray.push(doc.data()));
-					setPopularCliparts(popArray);
-				});
-		}
-		getDataArray();
-	}, []);
 
 	return (
 		<>
 			<h2>Popular Cliparts</h2>
-			<div className={classes.cliparts}>
-				{popularCliparts.map((clipart) => (
-					<ClipartCard className={classes.clipart} clipartInfo={clipart} />
-				))}
-			</div>
+			{popularCliparts && (
+				<div className={classes.cliparts}>
+					{popularCliparts.map((clipart) => (
+						<ClipartCard className={classes.clipart} clipartInfo={clipart} />
+					))}
+				</div>
+			)}
 		</>
 	);
 };

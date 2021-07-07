@@ -22,35 +22,19 @@ const useStyles = makeStyles({
 	},
 });
 
-const RecentCliparts = () => {
+const RecentCliparts = ({ recentCliparts }) => {
 	const classes = useStyles();
-
-	const [recentCliparts, setRecentCliparts] = useState([]);
-
-	useEffect(() => {
-		function getDataArray() {
-			const popArray = [];
-			const recentArr = db
-				.collection('data')
-				.orderBy('uploadDate', 'desc')
-				.limit(18)
-				.get()
-				.then(({ docs }) => {
-					docs.forEach((doc) => popArray.push(doc.data()));
-					setRecentCliparts(popArray);
-				});
-		}
-		getDataArray();
-	}, []);
 
 	return (
 		<>
 			<h2 className={classes.recent}>Recent Cliparts</h2>
-			<div className={classes.cliparts}>
-				{recentCliparts.map((clipart) => (
-					<ClipartCard className={classes.clipart} clipartInfo={clipart} />
-				))}
-			</div>
+			{recentCliparts && (
+				<div className={classes.cliparts}>
+					{recentCliparts.map((clipart) => (
+						<ClipartCard className={classes.clipart} clipartInfo={clipart} />
+					))}
+				</div>
+			)}
 		</>
 	);
 };

@@ -6,7 +6,6 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Header from './ui/Header';
 
 import PopularCliparts from './components/home/PopularCliparts';
-import RecentCliparts from './components/home/RecentClipart';
 import SearchBar from './components/SearchBar';
 import CategoriesTabs from './components/home/CategoriesTabs';
 import SubCategories from './components/categories/SubCategories';
@@ -14,6 +13,7 @@ import IndividualSubCategoryList from './components/categories/IndividualSubCate
 //test
 import ClipartDetails from './components/ClipartDetails';
 import Login from './components/admin/Login.js';
+import RecentAndPopCliparts from './components/home/RecentAndPopCliparts';
 
 function App() {
 	// const errorSnackbar = () => {
@@ -40,8 +40,7 @@ function App() {
 				<Route exact path='/' component={SearchBar} />
 
 				<Route exact path='/search' component={SearchBar} />
-				<Route exact path='/' component={PopularCliparts} />
-				<Route exact path='/' component={RecentCliparts} />
+				<Route exact path='/' component={RecentAndPopCliparts} />
 				<Route exact path='/categories/:catName' component={SubCategories} />
 				<Route
 					exact
