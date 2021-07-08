@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { ThemeProvider } from '@material-ui/styles';
 import './App.css';
 import theme from './ui/Theme';
@@ -14,8 +15,38 @@ import IndividualSubCategoryList from './components/categories/IndividualSubCate
 import ClipartDetails from './components/ClipartDetails';
 import Login from './components/admin/Login.js';
 import RecentAndPopCliparts from './components/home/RecentAndPopCliparts';
+import { storage } from './firebase';
 
 function App() {
+	const [downloadURL, setDownloadURL] = useState('');
+	useEffect(() => {
+		storage
+			.ref()
+			.child('/cliparts/Hanaby.jpeg')
+			.getDownloadURL()
+			.then((url) => {
+				// `url` is the download URL for 'images/stars.jpg'
+
+				// This can be downloaded directly:
+				var xhr = new XMLHttpRequest();
+				xhr.responseType = 'blob';
+				xhr.onload = (event) => {
+					var blob = xhr.response;
+					let url = URL.createObjectURL(blob);
+					setDownloadURL(url);
+				};
+				xhr.open('GET', url);
+				xhr.send();
+				console.log('is it working');
+				// setDownloadURL(url);
+			})
+
+			.catch((error) => {
+				// Handle any errors
+				console.log('somehow I can not download it');
+			});
+	}, []);
+
 	// const errorSnackbar = () => {
 	// 	if (uploadError) {
 	// 		return (
@@ -49,6 +80,10 @@ function App() {
 				/>
 				<Route exact path='/admin' component={Login} />
 				<Route path='/details/:imgName' component={ClipartDetails} />
+
+				<a download='sonam' href={downloadURL}>
+					Download Now
+				</a>
 
 				{/* <Footer /> */}
 			</div>
