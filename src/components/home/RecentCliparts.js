@@ -28,6 +28,7 @@ const RecentCliparts = ({ recentCliparts }) => {
 	return (
 		<>
 			<h2 className={classes.recent}>Recent Cliparts</h2>
+			<br />
 			{recentCliparts && (
 				<div className={classes.cliparts}>
 					{recentCliparts.map((clipart) => (

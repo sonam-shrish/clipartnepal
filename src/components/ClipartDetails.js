@@ -1,22 +1,28 @@
 import { useEffect, useState } from 'react';
-import { db, storage } from '../firebase';
+import { db } from '../firebase';
 import {
 	Card,
 	makeStyles,
 	CardContent,
 	CardActions,
 	Paper,
-	IconButton,
 	Chip,
 	Button,
 } from '@material-ui/core';
-import { CloudDownload } from '@material-ui/icons';
-import RecentCliparts from './home/RecentCliparts';
-import PopularCliparts from './home/PopularCliparts';
-import ClipartCard from './ClipartCard';
-
+import {
+	FacebookShareButton,
+	FacebookIcon,
+	FacebookMessengerShareButton,
+	FacebookMessengerIcon,
+	MessengerIcon,
+	TwitterShareButton,
+	TwitterIcon,
+	PinterestShareButton,
+	PinterestIcon,
+} from 'react-share';
 import { v4 as uuidv4 } from 'uuid';
 import RecentAndPopCliparts from './home/RecentAndPopCliparts';
+import ClipartCard from './ClipartCard';
 
 const useStyles = makeStyles({
 	cliparts: {
@@ -46,6 +52,11 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
 		flexWrap: 'wrap',
 	},
+	socialShare: {
+		display: 'flex',
+		gap: '10px',
+		justifyContent: 'center',
+	},
 });
 
 const ClipartDetails = (props) => {
@@ -63,7 +74,6 @@ const ClipartDetails = (props) => {
 			.doc(imgName)
 			.get()
 			.then((doc) => {
-				console.log('setting the image data');
 				setImgData(doc.data());
 
 				// Handling the download part
@@ -80,7 +90,7 @@ const ClipartDetails = (props) => {
 				// End of Handling the download part
 
 				// related cliparts
-				const relatedArray = [''];
+				const relatedArray = [];
 				db.collection('data')
 					.where('tags', 'array-contains-any', [
 						...doc.data().tags,
@@ -95,11 +105,7 @@ const ClipartDetails = (props) => {
 			});
 		// End of getting related cliparts
 		console.log(uuidv4());
-
-		function getRelatedCliparts() {}
-		getRelatedCliparts();
 	}, [props.match.url]);
-	console.log(props.match.params.imgName);
 	return (
 		<div>
 			{imgData ? (
@@ -112,21 +118,25 @@ const ClipartDetails = (props) => {
 									src={imgData.url}
 									className={classes.media}
 								/>
+								<div className={classes.socialShare}>
+									<FacebookMessengerShareButton url={imgData.url}>
+										<FacebookMessengerIcon size={30} round={true} />
+									</FacebookMessengerShareButton>
+									<FacebookShareButton url={imgData.url}>
+										<FacebookIcon size={30} round={true} />
+									</FacebookShareButton>
+									<TwitterShareButton url={imgData.url}>
+										<TwitterIcon size={30} round={true} />
+									</TwitterShareButton>
+									<PinterestShareButton>
+										<PinterestIcon size={30} round={true} />
+									</PinterestShareButton>
+								</div>
 							</center>
 						</div>
 						<div>
 							<CardActions disableSpacing>
 								<b>{imgData.imgName}</b>
-								<div className={classes.actionBtns}>
-									<a download href={imgData.url} target='_blank'>
-										<IconButton
-											className={classes.downloadBtn}
-											aria-label='download'
-										>
-											<CloudDownload />
-										</IconButton>
-									</a>
-								</div>
 							</CardActions>
 							<CardContent vlassName={classes.left}>
 								<ul className={classes.list}>
@@ -137,12 +147,14 @@ const ClipartDetails = (props) => {
 									</li>
 									<li>Type: {imgData.type} </li>
 									<li>
+										<br />
 										<Paper className={classes.paper}>
 											<p>Sub Category</p>
 											{imgData.subcategories.map((category) => (
 												<Chip className={classes.chip} label={category} />
 											))}
 										</Paper>
+										<br />
 									</li>
 									<li>
 										<Paper className={classes.paper}>
@@ -153,14 +165,14 @@ const ClipartDetails = (props) => {
 														<Chip className={classes.chip} label={tag} />
 												  ))
 												: null}
-											<div>
-												<a download={imgData.imgName} href={downloadURL}>
-													<Button variant='contained' color='primary'>
-														Download
-													</Button>
-												</a>
-											</div>
+											<div></div>
 										</Paper>
+										<br />
+										<a download={imgData.imgName} href={downloadURL}>
+											<Button variant='contained' color='primary'>
+												Download
+											</Button>
+										</a>
 									</li>
 								</ul>
 							</CardContent>

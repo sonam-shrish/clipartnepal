@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
 		borderRadius: '50px',
 		marginLeft: '50px',
 	},
+	link: {
+		textDecoration: 'none',
+		color: 'white',
+	},
 }));
 
 const Header = () => {
@@ -64,32 +68,25 @@ const Header = () => {
 			<ElevationScroll>
 				<AppBar position='fixed'>
 					<Toolbar>
-						<Button
-							disableRipple
-							component={Link}
-							to='/'
-							className={classes.logoBtn}
-						>
-							<img src={logo} className={classes.logo} />
-						</Button>
+						<a href='/'>
+							<Button disableRipple className={classes.logoBtn}>
+								<img src={logo} className={classes.logo} />
+							</Button>
+						</a>
+
 						<Tabs
 							value={activeTab}
 							onChange={handleActiveTab}
 							className={classes.tabsContainer}
 						>
-							<Tab
-								label='Home'
-								className={classes.tab}
-								component={Link}
-								to='/'
-							/>
-
-							<Tab
-								label='Add Clipart'
-								className={classes.tab}
-								component={Link}
-								to='/admin'
-							/>
+							<a href='/' className={classes.link}>
+								<Tab
+									label='Home'
+									className={classes.tab}
+									component={Link}
+									to='/'
+								/>
+							</a>
 						</Tabs>
 					</Toolbar>
 				</AppBar>

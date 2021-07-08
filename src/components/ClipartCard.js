@@ -58,12 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ClipartCard(props) {
 	const classes = useStyles();
-	const {
-		imgName,
-
-		url,
-		views,
-	} = props.clipartInfo;
+	const { imgName, url, views } = props.clipartInfo;
 
 	function handleViews() {
 		let newViews = views + 1;

@@ -25,6 +25,7 @@ const PopularCliparts = ({ popularCliparts }) => {
 	return (
 		<>
 			<h2>Popular Cliparts</h2>
+			<br />
 			{popularCliparts && (
 				<div className={classes.cliparts}>
 					{popularCliparts.map((clipart) => (

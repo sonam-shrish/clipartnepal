@@ -34,7 +34,7 @@ function SearchBar({ history }) {
 			.get();
 		results.then(({ docs }) => {
 			if (!docs[0]) {
-				setError({ message: 'No results found' });
+				setError({ message: 'empty' });
 			}
 			docs.forEach((result) => resultsArray.push(result.data()));
 			console.log(resultsArray);
@@ -45,6 +45,7 @@ function SearchBar({ history }) {
 
 	function handleInput(e) {
 		setSearchText(e.target.value);
+		setError(null);
 	}
 
 	return (
@@ -66,13 +67,19 @@ function SearchBar({ history }) {
 					</div>
 				</div>
 			</form>
+			<br />
+			<br />
 
 			<div className={classes.cliparts}>
-				{results.map((clipart) => (
-					<ClipartCard clipartInfo={clipart} />
-				))}
+				{results &&
+					results.map((clipart) => <ClipartCard clipartInfo={clipart} />)}
 			</div>
-			{error != 'empty' ? <>No Results for {searchText}</> : null}
+			{error && error.message == 'empty' ? (
+				<>
+					No Results for<strong> {searchText} </strong>
+					<br />
+				</>
+			) : null}
 			<br />
 		</>
 	);

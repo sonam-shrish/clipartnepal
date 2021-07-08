@@ -6,7 +6,7 @@ import CopyrightIcon from '@material-ui/icons/Copyright';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
-	footer: { position: 'absolute', bottom: '0', width: '100%' },
+	footer: { marginTop: 'auto' },
 });
 
 const Footer = () => {
@@ -14,18 +14,11 @@ const Footer = () => {
 
 	return (
 		<>
-			{/* //{' '}
 			<footer className={classes.footer}>
-				//{' '}
 				<center>
-					// <CopyrightIcon /> All Rights Reserved. //{' '}
-					<Link to='/' style={{ textDecoration: 'none' }}>
-						// clipartnepal.com //{' '}
-					</Link>
-					//{' '}
+					<CopyrightIcon /> All Rights Reserved. ClipartNepal
 				</center>
-				//{' '}
-			</footer> */}
+			</footer>
 		</>
 	);
 };
