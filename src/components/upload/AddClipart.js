@@ -65,9 +65,13 @@ export default function AddClipart() {
 	// test code end
 
 	const classes = useStyles();
+	useEffect(() => {
+		setUploadError(null);
+	}, []);
 
 	useEffect(() => {
 		/////////////////////////////////////////////GETTING OPTIONS FOR AUTOCOMPLETE
+
 		function getCategoriesArray() {
 			const categoriesArr = [];
 
@@ -81,9 +85,8 @@ export default function AddClipart() {
 		}
 
 		getCategoriesArray();
-		setUploadError(null);
 		setCategoriesUpdated(false);
-	}, []);
+	}, [uploadError]);
 
 	useEffect(() => {
 		function getSubCategoriesArray() {

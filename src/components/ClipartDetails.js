@@ -9,6 +9,8 @@ import {
 	Chip,
 	Button,
 } from '@material-ui/core';
+
+import { CloudDownload, Cloud, Visibility, Image } from '@material-ui/icons';
 import {
 	FacebookShareButton,
 	FacebookIcon,
@@ -140,12 +142,26 @@ const ClipartDetails = (props) => {
 							</CardActions>
 							<CardContent vlassName={classes.left}>
 								<ul className={classes.list}>
-									<li>Views: {imgData.views + 1}</li>
-									<li>Downloads {imgData.downloads}</li>
 									<li>
+										<Visibility />
+										{'  '}
+										Views: {imgData.views + 1}
+									</li>
+									<li>
+										<CloudDownload />
+										{'  '}
+										Downloads {imgData.downloads}
+									</li>
+									<li>
+										<Cloud />
+										{'  '}
 										Size: {Number.parseFloat(imgData.size).toFixed(2) + 'MB'}
 									</li>
-									<li>Type: {imgData.type} </li>
+									<li>
+										<Image />
+										{'  '}
+										Type: {imgData.type}{' '}
+									</li>
 									<li>
 										<br />
 										<Paper className={classes.paper}>

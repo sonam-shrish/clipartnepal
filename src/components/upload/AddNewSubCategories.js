@@ -112,15 +112,17 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 						setErrorMsg({ severity: 'danger', message: error.message }),
 					() => {
 						uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-							console.log(url);
-							db.collection('categories')
-								.doc(selectedCategory)
-								.update({
-									subcategories: firebase.firestore.FieldValue.arrayUnion({
-										name: subCategoryInput,
-										url,
-									}),
-								});
+							(function () {
+								db.collection('categories')
+									.doc(selectedCategory)
+									.update({
+										subcategories: firebase.firestore.FieldValue.arrayUnion({
+											name: subCategoryInput,
+											url,
+										}),
+									});
+							})();
+							handleError({ message: 'subcategory successfully added' });
 
 							setProgress(0);
 							setThumbnail(null);

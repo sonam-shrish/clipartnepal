@@ -28,6 +28,8 @@ const AddNewCategory = ({ existingCategories, handleError }) => {
 		} else {
 			if (!checkIfExisting) {
 				db.collection('categories').doc(newCat.toLowerCase()).set({});
+				handleError({ message: 'Category added successfully' });
+
 				setNewCat('');
 			} else {
 				handleError({ message: 'Category already exists' });
