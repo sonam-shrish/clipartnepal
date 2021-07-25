@@ -2,23 +2,25 @@ import { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import { db } from '../firebase';
-
-import ClipartCard from './ClipartCard';
+import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import Button from '@material-ui/core/Button';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import './SearchBar.css';
 
 const useStyles = makeStyles({
-	cliparts: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center',
-	},
 	searchForm: {
-		marginTop: '2em',
+		padding: '20px 20px',
+	},
+	inputField: {
+		backgroundColor: 'white',
+		borderRadius: '5px',
+		paddingRight: '0',
 	},
 });
 
-function SearchBar({ history }) {
+function Search(props) {
 	const [searchText, setSearchText] = useState('');
 	const [results, setResults] = useState([]);
 	const [error, setError] = useState('empty');
@@ -26,6 +28,8 @@ function SearchBar({ history }) {
 	const classes = useStyles();
 
 	function handleSearchSubmit(e) {
+		props.history.push('/search/' + searchText);
+
 		e.preventDefault();
 		const resultsArray = [];
 		const results = db
@@ -37,7 +41,6 @@ function SearchBar({ history }) {
 				setError({ message: 'empty' });
 			}
 			docs.forEach((result) => resultsArray.push(result.data()));
-			console.log(resultsArray);
 
 			setResults(resultsArray);
 		});
@@ -51,38 +54,23 @@ function SearchBar({ history }) {
 	return (
 		<>
 			<form onSubmit={handleSearchSubmit} className={classes.searchForm}>
-				<div className='searchContainer'>
-					<div class='search active'>
-						<div class='icon'></div>
-
-						<div class='input'>
-							<input
-								type='text'
-								placeholder='Search...'
-								id='mysearch'
-								value={searchText}
-								onChange={handleInput}
-							/>
-						</div>
-					</div>
-				</div>
+				<TextField
+					variant='outlined'
+					placeholder='Search Clipart'
+					onChange={handleInput}
+					className={classes.inputField}
+					size='small'
+				/>
+				<Button
+					variant='contained'
+					color='primary'
+					onClick={handleSearchSubmit}
+				>
+					Search
+				</Button>
 			</form>
-			<br />
-			<br />
-
-			<div className={classes.cliparts}>
-				{results &&
-					results.map((clipart) => <ClipartCard clipartInfo={clipart} />)}
-			</div>
-			{error && error.message == 'empty' ? (
-				<>
-					No Results for<strong> {searchText} </strong>
-					<br />
-				</>
-			) : null}
-			<br />
 		</>
 	);
 }
 
-export default withRouter(SearchBar);
+export default withRouter(Search);

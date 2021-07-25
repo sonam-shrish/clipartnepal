@@ -1,6 +1,6 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const clipBlue = '#0B72B9';
+const clipBlue = '#ADD6F2';
 const clipOrange = '#eeba60';
 const theme = createMuiTheme({
 	palette: {

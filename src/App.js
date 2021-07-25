@@ -3,9 +3,10 @@ import './App.css';
 import theme from './ui/Theme';
 import { Route } from 'react-router-dom';
 
-import Header from './ui/Header';
+import Navbar from './ui/Navbar';
+import Search from './ui/Search';
+import SearchBar from './ui/SearchBar';
 
-import SearchBar from './components/SearchBar';
 import CategoriesTabs from './components/home/CategoriesTabs';
 import SubCategories from './components/categories/SubCategories';
 import IndividualSubCategoryList from './components/categories/IndividualSubCategoryList';
@@ -13,17 +14,19 @@ import ClipartDetails from './components/ClipartDetails';
 import Login from './components/admin/Login.js';
 import RecentAndPopCliparts from './components/home/RecentAndPopCliparts';
 import Footer from './ui/Footer';
+import SearchResults from './ui/searchResult/SearchResults';
 
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
 			<div className='App'>
-				<Header />
+				<Navbar />
+				<Search />
+				<SearchBar />
 
 				<Route path='/' component={CategoriesTabs} />
-				<Route exact path='/' component={SearchBar} />
 
-				<Route exact path='/search' component={SearchBar} />
+				<Route exact path='/search/:searchTerm' component={SearchResults} />
 				<Route exact path='/' component={RecentAndPopCliparts} />
 				<Route exact path='/categories/:catName' component={SubCategories} />
 				<Route

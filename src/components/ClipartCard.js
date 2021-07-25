@@ -2,20 +2,15 @@
 
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { CloudDownload } from '@material-ui/icons';
-import { Modal, CardContent, Typography } from '@material-ui/core';
-import { IconButton, Card, CardActions, Chip, Paper } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 
 import { db } from '../firebase';
 import { withRouter, Route, Link } from 'react-router-dom';
-
-import ClipartDetails from './ClipartDetails';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: '150px',
 		height: '150px',
-		overflow: 'auto',
 	},
 	media: {
 		objectFit: 'contain',
