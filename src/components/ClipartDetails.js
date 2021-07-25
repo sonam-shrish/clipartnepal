@@ -103,7 +103,7 @@ const ClipartDetails = (props) => {
 						setRelatedCliparts(relatedArray);
 					});
 			});
-	}, [props.match.url]);
+	}, [props.match.url, imgName]);
 	return (
 		<div>
 			{imgData ? (
