@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { db } from '../../firebase';
 import ClipartCard from '../ClipartCard';
 
 import { makeStyles } from '@material-ui/core';

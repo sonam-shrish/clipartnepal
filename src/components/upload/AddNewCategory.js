@@ -44,11 +44,12 @@ const AddNewCategory = ({ existingCategories, handleError }) => {
 				<FormControl fullWidth className={classes.field}>
 					<TextField
 						label='New Category Name'
-						placeholder='Add New Category '
+						placeholder=' New Category Name '
 						variant='outlined'
 						onChange={(e) => setNewCat(e.target.value)}
 						value={newCat}
 					/>
+					<br></br>
 
 					<Button
 						className={classes.spaced}
@@ -56,7 +57,7 @@ const AddNewCategory = ({ existingCategories, handleError }) => {
 						variant='contained'
 						color='secondary'
 					>
-						Add Category
+						Create New Category
 					</Button>
 				</FormControl>
 			</Paper>

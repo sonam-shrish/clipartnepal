@@ -14,7 +14,6 @@ import { PhotoCamera } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/styles';
 import { db, storage } from '../../firebase';
 import AddNewCategory from './AddNewCategory';
-import AddNewSubCategories from './AddNewSubCategories';
 import firebase from 'firebase';
 
 const useStyles = makeStyles({
@@ -56,13 +55,8 @@ export default function AddClipart() {
 	const [tagInput, setTagInput] = useState('');
 	const [tags, setTags] = useState([]);
 	const [progress, setProgress] = useState(0);
-	const [categoriesUpdated, setCategoriesUpdated] = useState(false);
 	const [uploadError, setUploadError] = useState(null);
 	const [snackbarOpen, setSnackbarOpen] = useState(false);
-
-	//test code
-	const [downloadUrl, setDownloadUrl] = useState('');
-	// test code end
 
 	const classes = useStyles();
 	useEffect(() => {
@@ -85,7 +79,6 @@ export default function AddClipart() {
 		}
 
 		getCategoriesArray();
-		setCategoriesUpdated(false);
 	}, [uploadError]);
 
 	useEffect(() => {
@@ -100,11 +93,9 @@ export default function AddClipart() {
 							const individualSubcats = doc.data().subcategories;
 							if (individualSubcats) {
 								individualSubcats.forEach((subCat) => {
-									console.log(subCat);
 									subCategoriesArr.push(subCat.name);
 									setSubcategoriesArray(subCategoriesArr);
 								});
-								console.log(subCategoriesArr);
 							}
 						});
 				});
@@ -167,7 +158,6 @@ export default function AddClipart() {
 
 	function handleSubcategoriesInput(e, value) {
 		setUploadSubcategories(value);
-		console.log(value);
 	}
 
 	function handleTagInput(e) {
@@ -237,7 +227,6 @@ export default function AddClipart() {
 					const currProgress = Math.round(
 						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
 					);
-					console.log(currProgress);
 					setProgress(currProgress);
 				},
 				(error) => setUploadError(error.message),
@@ -264,10 +253,6 @@ export default function AddClipart() {
 						setUploadSubcategories([]);
 						setUploadName('');
 						setTags([]);
-
-						//test code
-						setDownloadUrl(url);
-						// test code end
 					});
 				}
 			);
@@ -278,7 +263,7 @@ export default function AddClipart() {
 			return (
 				<Snackbar
 					open={snackbarOpen}
-					autoHideDuration={1000}
+					autoHideDuration={2500}
 					onClose={handleSnackbarClose}
 				>
 					<Alert severity='error'>{uploadError.message}</Alert>
@@ -292,6 +277,10 @@ export default function AddClipart() {
 	return (
 		<center>
 			<br />
+			<AddNewCategory
+				handleError={handleError}
+				existingCategories={categoriesArray}
+			/>
 
 			<Paper className={classes.form}>
 				<h2>Add New Clipart</h2>
@@ -317,7 +306,11 @@ export default function AddClipart() {
 								<PhotoCamera />
 							</Button>
 						</label>
-						<img className={classes.preview} src={previewURL} />
+						<img
+							alt='preview-img'
+							className={classes.preview}
+							src={previewURL}
+						/>
 						{progress ? (
 							<>
 								Upload Progress:{' '}
@@ -413,10 +406,6 @@ export default function AddClipart() {
 					</Button>
 				</form>
 			</Paper>
-			<AddNewCategory
-				handleError={handleError}
-				existingCategories={categoriesArray}
-			/>
 
 			{errorSnackbar()}
 		</center>

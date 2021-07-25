@@ -4,7 +4,6 @@ import theme from './ui/Theme';
 import { Route } from 'react-router-dom';
 
 import Navbar from './ui/Navbar';
-import Search from './ui/Search';
 import SearchBar from './ui/SearchBar';
 
 import CategoriesTabs from './components/home/CategoriesTabs';
@@ -21,12 +20,11 @@ function App() {
 		<ThemeProvider theme={theme}>
 			<div className='App'>
 				<Navbar />
-				<Search />
 				<SearchBar />
-
-				<Route path='/' component={CategoriesTabs} />
+				<CategoriesTabs />
 
 				<Route exact path='/search/:searchTerm' component={SearchResults} />
+
 				<Route exact path='/' component={RecentAndPopCliparts} />
 				<Route exact path='/categories/:catName' component={SubCategories} />
 				<Route

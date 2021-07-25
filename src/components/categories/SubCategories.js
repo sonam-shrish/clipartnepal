@@ -6,7 +6,6 @@ import { db } from '../../firebase';
 
 import { makeStyles } from '@material-ui/core';
 
-import ClipartCard from '../ClipartCard';
 import SubCategoryItem from './SubCategoryItem';
 import IndividualSubCategoryList from './IndividualSubCategoryList';
 
@@ -29,22 +28,20 @@ const SubCategories = (props) => {
 
 	useEffect(() => {
 		getDataArray();
-	}, [props]);
-
-	function getDataArray() {
-		db.collection('categories')
-			.doc(categoryName)
-			.get()
-			.then((doc) => {
-				if (doc.exists) {
-					const subCatArray = doc.data().subcategories;
-					console.log(doc.data().subcategories);
-					setSubCatData(subCatArray);
-				} else {
-					console.log('no results');
-				}
-			});
-	}
+		function getDataArray() {
+			db.collection('categories')
+				.doc(categoryName)
+				.get()
+				.then((doc) => {
+					if (doc.exists) {
+						const subCatArray = doc.data().subcategories;
+						setSubCatData(subCatArray);
+					} else {
+						console.log('no results');
+					}
+				});
+		}
+	}, [categoryName]);
 
 	if (subCatData) {
 		return (

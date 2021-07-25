@@ -16,13 +16,11 @@ import {
 	FacebookIcon,
 	FacebookMessengerShareButton,
 	FacebookMessengerIcon,
-	MessengerIcon,
 	TwitterShareButton,
 	TwitterIcon,
 	PinterestShareButton,
 	PinterestIcon,
 } from 'react-share';
-import { v4 as uuidv4 } from 'uuid';
 import RecentAndPopCliparts from './home/RecentAndPopCliparts';
 import ClipartCard from './ClipartCard';
 
@@ -105,8 +103,6 @@ const ClipartDetails = (props) => {
 						setRelatedCliparts(relatedArray);
 					});
 			});
-		// End of getting related cliparts
-		console.log(uuidv4());
 	}, [props.match.url]);
 	return (
 		<div>

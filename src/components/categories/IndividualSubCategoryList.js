@@ -24,16 +24,13 @@ const IndividualSubCategoryList = (props) => {
 		const resultsArray = [];
 		const results = db
 			.collection('data')
-			// .where('imgName', '==', 'testimg')
 			.where('subcategories', 'array-contains', subCatWord)
 			.get();
 		results.then(({ docs }) => {
 			docs.forEach((item) => resultsArray.push(item.data()));
-			// console.log(resultsArray);
 			setSubCategoriesItems(resultsArray);
 		});
-	}, []);
-	// console.log(subCatWord);
+	}, [subCatWord]);
 
 	const classes = useStyles();
 

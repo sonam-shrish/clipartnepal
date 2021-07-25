@@ -10,21 +10,12 @@ import {
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/styles';
-import logo from '../assets/logo.png';
 
 const useStyles = makeStyles((theme) => ({
 	toolbarMargin: {
 		...theme.mixins.toolbar,
 	},
-	logo: {
-		height: '7em',
-	},
-	logoBtn: {
-		padding: '0',
-		'&:hover': {
-			backgroundColor: 'transparent',
-		},
-	},
+
 	tabsContainer: {
 		marginLeft: 'auto',
 	},
@@ -32,14 +23,6 @@ const useStyles = makeStyles((theme) => ({
 		...theme.typography.tab,
 		minWidth: 10,
 		marginLeft: '25px',
-	},
-	button: {
-		...theme.typography.estimate,
-		borderRadius: '50px',
-		marginLeft: '50px',
-	},
-	link: {
-		textDecoration: 'none',
 		color: 'white',
 	},
 

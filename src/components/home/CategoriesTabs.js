@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { db } from '../../firebase';
 
-import {
-	Toolbar,
-	useScrollTrigger,
-	Tabs,
-	Tab,
-	Button,
-} from '@material-ui/core';
+import { Toolbar, useScrollTrigger, Tabs, Tab } from '@material-ui/core';
 import { Link, withRouter } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/styles';
@@ -43,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CategoriesTabs = (props) => {
 	let history = props.history;
-	const [activeTab, setActiveTab] = useState(null);
+	const [activeTab, setActiveTab] = useState(0);
 	const [categoriesArray, setCategoriesArray] = useState([]);
 
 	const classes = useStyles();
@@ -95,6 +89,7 @@ const CategoriesTabs = (props) => {
 					>
 						{categoriesArray.map((cat) => (
 							<Tab
+								key={Math.random()}
 								onClick={handleCategoriesClick}
 								label={cat.id}
 								className={classes.tab}

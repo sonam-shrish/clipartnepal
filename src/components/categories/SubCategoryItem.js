@@ -1,7 +1,6 @@
 //Complete card small
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { Link, withRouter } from 'react-router-dom';
 
@@ -27,7 +26,6 @@ function SubCategoryItem(props) {
 	const { subCatName, url } = props;
 	const subCatURL = parentURL + '/' + subCatName;
 
-	console.log(props);
 	return (
 		<Link className={classes.link} to={subCatURL}>
 			<Card className={classes.subCat}>

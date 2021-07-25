@@ -27,6 +27,8 @@ const RecentAndPopCliparts = () => {
 		let indexOfLastClipart = currentPageNumber * 12 - 1;
 		let indexOfFirstClipart =
 			indexOfLastClipart - 12 > 0 ? indexOfLastClipart - 12 : 0;
+		getRecentCliprts();
+		getPopularCliparts();
 
 		// get recent cliparts and set them
 		function getRecentCliprts() {
@@ -43,10 +45,8 @@ const RecentAndPopCliparts = () => {
 					setRecentCliparts(recentArray); // +1 because slice does not include the last
 					//setting the pagination numbers
 					setNumberOfPaginationNumbers(Math.ceil(docs.length / 12));
-					console.log(docs.length);
 				});
 		}
-		getRecentCliprts();
 
 		//get popular cliparts and set them
 		function getPopularCliparts() {
@@ -64,10 +64,6 @@ const RecentAndPopCliparts = () => {
 					setPopularCliparts(popArray);
 				});
 		}
-		getPopularCliparts();
-
-		console.log('fetching for' + currentPageNumber);
-		//set the data
 	}, [currentPageNumber]);
 
 	function handlePageChange(event, pageNumber) {

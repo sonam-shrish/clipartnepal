@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-import { Toolbar, AppBar, useScrollTrigger, Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 import { makeStyles } from '@material-ui/styles';
 import Search from '../ui/Search';

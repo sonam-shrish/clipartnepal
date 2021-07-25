@@ -174,7 +174,11 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 						<PhotoCamera />
 					</Button>
 				</label>
-				<img className={classes.preview} src={previewURL} />
+				<img
+					alt='preview-thumbnail'
+					className={classes.preview}
+					src={previewURL}
+				/>
 			</FormControl>
 			<FormControl variant='outlined' className={classes.field}>
 				<InputLabel htmlFor='outlined-age-native-simple'>Category</InputLabel>
@@ -198,8 +202,9 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 					label='New Sub-Category Name'
 					onChange={(e) => setSubCategoryInput(e.target.value)}
 					value={subCategoryInput}
-					placeholder='Add New Subcategory Name'
+					placeholder='Create New Subcategory Name'
 				/>
+				<br></br>
 			</FormControl>
 			<div></div>
 			<Button
@@ -209,7 +214,7 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 				color='secondary'
 				type='submit'
 			>
-				Add New Sub Category
+				Create New Sub Category
 			</Button>
 
 			{/* ERROR HANDLING */}

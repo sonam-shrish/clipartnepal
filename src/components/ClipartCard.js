@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Card } from '@material-ui/core';
 
 import { db } from '../firebase';
-import { withRouter, Route, Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
 	root: {

@@ -6,10 +6,9 @@ import { Delete } from '@material-ui/icons';
 
 const useStyles = makeStyles({
 	root: {
-		maxWidth: 300,
-		maxHeight: '400px',
-		overflow: 'auto',
-		margin: '10px 15px',
+		width: '200px',
+		height: '200px',
+		margin: '20px 15px',
 	},
 	media: {
 		objectFit: 'contain',
@@ -22,13 +21,15 @@ const useStyles = makeStyles({
 	},
 });
 
-const AllCliparts = () => {
+const AllCliparts = ({ handleSnackbarOpen }) => {
 	const classes = useStyles();
 	const [cliparts, setCliparts] = useState([]);
+	const [refreshStatus, setRefreshStatus] = useState(false);
 
 	useEffect(() => {
 		getDataArray();
-	}, []);
+		setRefreshStatus(false);
+	}, [refreshStatus]);
 
 	function getDataArray() {
 		const allCliparts = [];
@@ -38,7 +39,6 @@ const AllCliparts = () => {
 			.then(({ docs }) => {
 				docs.forEach((doc) => allCliparts.push(doc.data()));
 				setCliparts(allCliparts);
-				console.log(allCliparts);
 			});
 	}
 
@@ -47,19 +47,21 @@ const AllCliparts = () => {
 			.ref()
 			.child('cliparts/' + imgName + '.' + type)
 			.delete()
-			.then(() => console.log('deletion successful'))
-			.catch((error) => console.log('deletion error', error));
+			.then(() => {
+				console.log('image deletion successful');
+				handleSnackbarOpen(true, { message: 'Deleted Successfully' });
+			})
+			.catch((error) => console.log('image deletion error', error));
 		db.collection('data')
 			.doc(imgName)
 			.delete()
 			.then(() => {
-				console.log('clipart doc successfully deleted!');
+				console.log('data deleted');
+				setRefreshStatus(true);
 			})
 			.catch((error) => {
 				console.error('Error removing clipart: ', error);
 			});
-
-		console.log(imgName);
 	}
 	return (
 		<div className={classes.clipartsContainer}>

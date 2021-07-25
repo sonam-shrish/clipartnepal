@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { db } from '../../firebase';
 import ClipartCard from '../ClipartCard';
 
 import { makeStyles } from '@material-ui/core';
@@ -29,7 +27,11 @@ const PopularCliparts = ({ popularCliparts }) => {
 			{popularCliparts && (
 				<div className={classes.cliparts}>
 					{popularCliparts.map((clipart) => (
-						<ClipartCard className={classes.clipart} clipartInfo={clipart} />
+						<ClipartCard
+							key={Math.random()}
+							className={classes.clipart}
+							clipartInfo={clipart}
+						/>
 					))}
 				</div>
 			)}

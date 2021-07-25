@@ -9,15 +9,10 @@ const useStyles = makeStyles({
 		flexWrap: 'wrap',
 		padding: '20px 100px',
 	},
-	searchForm: {
-		marginTop: '2em',
-	},
 });
 
 function SearchResult(props) {
-	const [searchText, setSearchText] = useState('');
 	const [results, setResults] = useState([]);
-	const [error, setError] = useState('empty');
 
 	const classes = useStyles();
 	useEffect(() => {
@@ -32,10 +27,9 @@ function SearchResult(props) {
 				)
 				.get();
 			results.then(({ docs }) => {
-				if (!docs[0]) {
-					setError({ message: 'empty' });
+				if (docs[0]) {
+					docs.forEach((result) => resultsArray.push(result.data()));
 				}
-				docs.forEach((result) => resultsArray.push(result.data()));
 
 				setResults(resultsArray);
 			});
@@ -45,18 +39,17 @@ function SearchResult(props) {
 	return (
 		<>
 			<div className={classes.cliparts}>
+				<div>
+					Found {results.length} result for{' '}
+					<strong>{props.match.params.searchTerm}</strong>
+				</div>
+				<br></br>
+				<br></br>
+
 				{results &&
 					results.map((clipart) => <ClipartCard clipartInfo={clipart} />)}
 			</div>
-			<div>
-				No more results for <strong>{props.match.params.searchTerm}</strong>
-			</div>
-			{/* {error && error.message == 'empty' ? (
-				<>
-					No More Results for<strong> {props.match.params.searchTerm} </strong>
-					<br />
-				</>
-			) : null} */}
+
 			<br />
 		</>
 	);

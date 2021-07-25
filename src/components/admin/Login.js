@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
-import { Modal, Button, Input } from '@material-ui/core';
+import { Snackbar, Button, Input } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AddClipart from '../upload/AddClipart';
 import AllCliparts from '../upload/AllCliparts';
@@ -24,11 +26,12 @@ const useStyles = makeStyles((theme) => ({
 function Auth({ history }) {
 	const classes = useStyles();
 
-	const [username, setUsername] = useState('enter');
+	const [snackbarOpen, setSnackbarOpen] = useState(true);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
 	const [activeTab, setActiveTab] = useState(null);
+	const [alertMessage, setAlertMessage] = useState(null);
 
 	const handleSignIn = (e) => {
 		e.preventDefault();
@@ -57,21 +60,46 @@ function Auth({ history }) {
 	function handleActiveTab(e, value) {
 		setActiveTab(value);
 	}
+	// SNACKBAR STUFF
+	function handleSnackbarOpen(state, message) {
+		setSnackbarOpen(state);
+		setAlertMessage(message);
+	}
+
+	const handleSnackbarClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+
+		setSnackbarOpen(false);
+		setAlertMessage(null);
+	};
 
 	function adminTasks() {
 		switch (activeTab) {
 			case 0:
 				return (
 					<>
-						<AddClipart />
+						<AddClipart handleSnackbarOpen={handleSnackbarOpen} />
 					</>
 				);
 			case 1:
 				return (
 					<>
-						<AllCliparts />
+						<AllCliparts handleSnackbarOpen={handleSnackbarOpen} />
+						{alertMessage && (
+							<Snackbar
+								open={snackbarOpen}
+								autoHideDuration={2500}
+								onClose={handleSnackbarClose}
+							>
+								<Alert severity='error'> Hey joe{alertMessage.message}</Alert>
+							</Snackbar>
+						)}
 					</>
 				);
+			default:
+				return null;
 		}
 	}
 
