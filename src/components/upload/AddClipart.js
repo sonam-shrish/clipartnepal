@@ -80,7 +80,7 @@ export default function AddClipart() {
 		}
 
 		getCategoriesArray();
-	}, [uploadError]);
+	}, []);
 
 	//get upload sub categories
 	useEffect(() => {
@@ -155,10 +155,12 @@ export default function AddClipart() {
 	}
 
 	function handleCategoriesInput(e, value) {
+		console.log(value);
 		setUploadCategories(value);
 	}
 
 	function handleSubcategoriesInput(e, value) {
+		console.log(value);
 		setUploadSubcategories(value);
 	}
 
@@ -335,18 +337,18 @@ export default function AddClipart() {
 							value={uploadName}
 						/>
 					</FormControl>
-
+					{/* Categories */}
 					<FormControl fullWidth className={classes.field}>
 						<Autocomplete
-							key={Math.random()}
 							multiple
 							id='categories-input'
-							onChange={handleCategoriesInput}
+							onChange={(e, value) => setUploadCategories(value)}
 							options={categoriesArray}
 							getOptionLabel={(category) => category}
 							filterSelectedOptions
 							renderInput={(params) => (
 								<TextField
+									size='small'
 									{...params}
 									variant='outlined'
 									label='Categories'
