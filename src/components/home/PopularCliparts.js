@@ -18,6 +18,7 @@ const useStyles = makeStyles({
 });
 
 const PopularCliparts = ({ popularCliparts }) => {
+	console.log(popularCliparts);
 	const classes = useStyles();
 
 	return (

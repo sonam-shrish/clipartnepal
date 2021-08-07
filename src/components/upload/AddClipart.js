@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/styles';
 import { db, storage } from '../../firebase';
 import AddNewCategory from './AddNewCategory';
 import firebase from 'firebase';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles({
 	uploadInput: {
@@ -81,6 +82,7 @@ export default function AddClipart() {
 		getCategoriesArray();
 	}, [uploadError]);
 
+	//get upload sub categories
 	useEffect(() => {
 		function getSubCategoriesArray() {
 			const subCategoriesArr = [];
@@ -218,6 +220,7 @@ export default function AddClipart() {
 		} else {
 			//joining the spaces in the name with a hyphen
 			let joinedImgName = uploadName.split(' ').join('-');
+			const imgId = uuidv4();
 			const uploadTask = storage
 				.ref('cliparts/' + uploadName + '.' + imageType)
 				.put(image);
@@ -234,15 +237,17 @@ export default function AddClipart() {
 					//get the download url
 
 					uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-						db.collection('data').doc(joinedImgName).set({
+						db.collection('data').doc(imgId).set({
+							imgId,
 							uploadDate: firebase.firestore.FieldValue.serverTimestamp(),
 							imgName: joinedImgName,
+							imgDisplayName: uploadName,
 							size: imageSize,
 							type: imageType,
 							categories: uploadCategories,
 							subcategories: uploadSubcategories,
-							views: 10,
-							downloads: 10,
+							views: 0,
+							downloads: 0,
 							tags,
 							url: url,
 						});
@@ -359,7 +364,7 @@ export default function AddClipart() {
 							multiple
 							id='categories-input'
 							options={subcategoriesArray}
-							getOptionLabel={(subCatoegory) => subCatoegory}
+							getOptionLabel={(subCategory) => subCategory}
 							filterSelectedOptions
 							renderInput={(params) => (
 								<TextField
@@ -380,6 +385,7 @@ export default function AddClipart() {
 							value={tagInput}
 							placeholder='add tag name'
 						/>
+						{/* tags */}
 					</FormControl>
 					<Button
 						variant='contained'

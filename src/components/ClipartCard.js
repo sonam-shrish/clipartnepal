@@ -53,19 +53,18 @@ const useStyles = makeStyles((theme) => ({
 
 function ClipartCard(props) {
 	const classes = useStyles();
-	const { imgName, url, views } = props.clipartInfo;
+	const { imgName, url, views, imgId } = props.clipartInfo;
 
 	function handleViews() {
-		let newViews = views + 1;
+		let newViews = Number(views) + 1;
+		console.log(imgId);
 		console.log(views);
-		db.collection('data')
-			.doc(imgName)
-			.set({ ...props.clipartInfo, views: newViews });
+		db.collection('data').doc(imgId).update({ views: newViews });
 	}
 
 	return (
 		<>
-			<Link to={'/details/' + imgName} onClick={handleViews}>
+			<Link to={'/details/' + imgId} onClick={handleViews}>
 				<Card className={classes.root}>
 					<center>
 						<img className={classes.media} alt={imgName} src={url} />

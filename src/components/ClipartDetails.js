@@ -8,6 +8,7 @@ import {
 	Paper,
 	Chip,
 	Button,
+	Typography,
 } from '@material-ui/core';
 
 import { CloudDownload, Cloud, Visibility, Image } from '@material-ui/icons';
@@ -44,6 +45,9 @@ const useStyles = makeStyles({
 	list: {
 		listStyleType: 'none',
 		textAlign: 'left',
+	},
+	chip: {
+		margin: '5px',
 	},
 	card: {
 		maxWidth: '900px',
@@ -104,6 +108,13 @@ const ClipartDetails = (props) => {
 					});
 			});
 	}, [props.match.url, imgName]);
+
+	function handleDownloadCount() {
+		let newDownloads = imgData.downloads + 1;
+		db.collection('data')
+			.doc(imgData.imgId)
+			.update({ downloads: newDownloads });
+	}
 	return (
 		<div>
 			{imgData ? (
@@ -116,6 +127,17 @@ const ClipartDetails = (props) => {
 									src={imgData.url}
 									className={classes.media}
 								/>
+								{/* DOWNLOAD BUTTON */}
+								<div onClick={handleDownloadCount}>
+									<a download={imgData.imgName} href={downloadURL}>
+										<Button variant='contained' color='primary'>
+											Download
+										</Button>
+									</a>
+								</div>
+								<br />
+
+								{/* SOCIAL SHARES */}
 								<div className={classes.socialShare}>
 									<FacebookMessengerShareButton url={imgData.url}>
 										<FacebookMessengerIcon size={30} round={true} />
@@ -133,25 +155,26 @@ const ClipartDetails = (props) => {
 							</center>
 						</div>
 						<div>
-							<CardActions disableSpacing>
-								<b>{imgData.imgName}</b>
-							</CardActions>
+							{/*CLIPART DETAILS */}
+
 							<CardContent vlassName={classes.left}>
+								<Typography variant='h3'>{imgData.imgDisplayName}</Typography>
 								<ul className={classes.list}>
 									<li>
 										<Visibility />
 										{'  '}
-										Views: {imgData.views + 1}
+										Views: {'  ' + imgData.views}
 									</li>
 									<li>
 										<CloudDownload />
 										{'  '}
-										Downloads {imgData.downloads}
+										Downloads: {'  ' + imgData.downloads}
 									</li>
 									<li>
 										<Cloud />
 										{'  '}
-										Size: {Number.parseFloat(imgData.size).toFixed(2) + 'MB'}
+										Size:{' '}
+										{'  ' + Number.parseFloat(imgData.size).toFixed(2) + 'MB'}
 									</li>
 									<li>
 										<Image />
@@ -180,11 +203,6 @@ const ClipartDetails = (props) => {
 											<div></div>
 										</Paper>
 										<br />
-										<a download={imgData.imgName} href={downloadURL}>
-											<Button variant='contained' color='primary'>
-												Download
-											</Button>
-										</a>
 									</li>
 								</ul>
 							</CardContent>
