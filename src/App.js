@@ -26,7 +26,6 @@ function App() {
 				<Navbar />
 				<SearchBar />
 				<CategoriesTabs />
-				<UpdateClipart />
 
 				<Route exact path='/search/:searchTerm' component={SearchResults} />
 
