@@ -10,16 +10,7 @@ const useStyles = makeStyles((theme) => ({
 		...theme.mixins.toolbar,
 	},
 
-	tabsContainer: {
-		marginLeft: 'auto',
-	},
-	tab: {
-		...theme.typography.tab,
-		minWidth: 10,
-		marginLeft: '25px',
-		color: 'white',
-	},
-
+	home: { marginLeft: 'auto', color: 'white' },
 	blue: {
 		color: '#87B4D3',
 		textTransform: 'lowercase',
@@ -56,7 +47,7 @@ const Header = () => {
 								<span className={classes.white}>Nepal</span>
 							</Button>
 						</Link>
-						<Link to='/'>
+						<Link to='/' className={classes.home}>
 							<Typography variant='h5'>Home</Typography>
 						</Link>
 					</Toolbar>
