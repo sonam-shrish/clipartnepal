@@ -142,7 +142,7 @@ function Auth({ history }) {
 								scrollButtons='on'
 							>
 								<Tab label='Add Clipart' />
-								<Tab label='Delete Clipart' />
+								<Tab label='Update Clipart' />
 							</Tabs>
 						</Toolbar>
 						{adminTasks()}

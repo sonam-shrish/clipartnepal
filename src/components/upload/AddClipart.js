@@ -240,7 +240,6 @@ export default function AddClipart() {
 						db.collection('data').doc(imgId).set({
 							imgId,
 							uploadDate: firebase.firestore.FieldValue.serverTimestamp(),
-							imgName: joinedImgName,
 							imgDisplayName: uploadName,
 							size: imageSize,
 							type: imageType,

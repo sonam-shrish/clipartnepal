@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
-import { db, storage } from '../../firebase';
+import { useState } from 'react';
+import { db } from '../../firebase';
 import { makeStyles } from '@material-ui/core';
-import firebase from 'firebase';
-import { v4 as uuidv4 } from 'uuid';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,15 +10,12 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Chip from '@material-ui/core/Chip';
 
-// icon imports
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // lab imports
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
 import {
 	getCategoriesArray,
 	getSubCategoriesArray,
-	getTags,
 } from '../../apiCalls/apiCalls';
 
 const useStyles = makeStyles({
@@ -52,16 +47,8 @@ const useStyles = makeStyles({
 
 const UpdateClipart = (props) => {
 	console.log(props);
-	const {
-		imgDisplayName,
-		categories,
-		size,
-		tags,
-		subcategories,
-		type,
-		url,
-		imgId,
-	} = props.clipartData ? props.clipartData : {};
+	const { imgDisplayName, categories, tags, subcategories, url, imgId } =
+		props.clipartData ? props.clipartData : {};
 
 	const classes = useStyles();
 

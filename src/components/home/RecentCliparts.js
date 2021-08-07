@@ -1,6 +1,7 @@
 import ClipartCard from '../ClipartCard';
 
 import { makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
 	cliparts: {
@@ -25,12 +26,18 @@ const RecentCliparts = ({ recentCliparts }) => {
 
 	return (
 		<>
-			<h2 className={classes.recent}>Recent Cliparts</h2>
+			<Typography variant='h4' className={classes.recent}>
+				Recent Cliparts
+			</Typography>
 			<br />
 			{recentCliparts && (
 				<div className={classes.cliparts}>
 					{recentCliparts.map((clipart) => (
-						<ClipartCard className={classes.clipart} clipartInfo={clipart} />
+						<ClipartCard
+							key={clipart.imgId}
+							className={classes.clipart}
+							clipartInfo={clipart}
+						/>
 					))}
 				</div>
 			)}

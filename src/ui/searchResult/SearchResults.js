@@ -38,16 +38,18 @@ function SearchResult(props) {
 
 	return (
 		<>
+			<div>
+				Found {results.length} result for{' '}
+				<strong>{props.match.params.searchTerm}</strong>
+			</div>
 			<div className={classes.cliparts}>
-				<div>
-					Found {results.length} result for{' '}
-					<strong>{props.match.params.searchTerm}</strong>
-				</div>
 				<br></br>
 				<br></br>
 
 				{results &&
-					results.map((clipart) => <ClipartCard clipartInfo={clipart} />)}
+					results.map((clipart) => (
+						<ClipartCard key={clipart.imgId} clipartInfo={clipart} />
+					))}
 			</div>
 
 			<br />

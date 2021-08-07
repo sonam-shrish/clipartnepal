@@ -1,12 +1,6 @@
-import React, { useState } from 'react';
-import {
-	Toolbar,
-	AppBar,
-	useScrollTrigger,
-	Tabs,
-	Tab,
-	Button,
-} from '@material-ui/core';
+import React from 'react';
+import { Toolbar, AppBar, useScrollTrigger, Button } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/styles';
@@ -39,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = () => {
-	const [activeTab, setActiveTab] = useState(0);
 	const classes = useStyles();
 	function ElevationScroll(props) {
 		const { children } = props;
@@ -50,9 +43,6 @@ const Header = () => {
 		});
 
 		return React.cloneElement(children, { elevation: trigger ? 4 : 0 });
-	}
-	function handleActiveTab(e, value) {
-		setActiveTab(value);
 	}
 
 	return (
@@ -66,19 +56,9 @@ const Header = () => {
 								<span className={classes.white}>Nepal</span>
 							</Button>
 						</Link>
-
-						<Tabs
-							value={activeTab}
-							onChange={handleActiveTab}
-							className={classes.tabsContainer}
-						>
-							<Tab
-								label='Home'
-								className={classes.tab}
-								component={Link}
-								to='/'
-							/>
-						</Tabs>
+						<Link to='/'>
+							<Typography variant='h5'>Home</Typography>
+						</Link>
 					</Toolbar>
 				</AppBar>
 			</ElevationScroll>

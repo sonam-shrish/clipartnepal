@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		maxWidth: '150px',
 		height: '150px',
+		margin: '5px',
 	},
 	media: {
 		objectFit: 'contain',

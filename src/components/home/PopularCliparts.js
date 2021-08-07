@@ -1,6 +1,7 @@
 import ClipartCard from '../ClipartCard';
 
 import { makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles({
 	cliparts: {
@@ -18,12 +19,11 @@ const useStyles = makeStyles({
 });
 
 const PopularCliparts = ({ popularCliparts }) => {
-	console.log(popularCliparts);
 	const classes = useStyles();
 
 	return (
 		<>
-			<h2>Popular Cliparts</h2>
+			<Typography variant='h4'>Popular Cliparts</Typography>
 			<br />
 			{popularCliparts && (
 				<div className={classes.cliparts}>

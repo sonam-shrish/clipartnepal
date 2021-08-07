@@ -4,7 +4,6 @@ import {
 	Card,
 	makeStyles,
 	CardContent,
-	CardActions,
 	Paper,
 	Chip,
 	Button,
@@ -64,7 +63,6 @@ const useStyles = makeStyles({
 });
 
 const ClipartDetails = (props) => {
-	console.log(props);
 	const classes = useStyles();
 	const [imgData, setImgData] = useState(null);
 	const [relatedCliparts, setRelatedCliparts] = useState([]);
@@ -90,7 +88,6 @@ const ClipartDetails = (props) => {
 				};
 				xhr.open('GET', doc.data().url);
 				xhr.send();
-				console.log('is it working');
 				// End of Handling the download part
 
 				// related cliparts
@@ -157,7 +154,7 @@ const ClipartDetails = (props) => {
 						<div>
 							{/*CLIPART DETAILS */}
 
-							<CardContent vlassName={classes.left}>
+							<CardContent className={classes.left}>
 								<Typography variant='h3'>{imgData.imgDisplayName}</Typography>
 								<ul className={classes.list}>
 									<li>
@@ -186,7 +183,11 @@ const ClipartDetails = (props) => {
 										<Paper className={classes.paper}>
 											<p>Sub Category</p>
 											{imgData.subcategories.map((category) => (
-												<Chip className={classes.chip} label={category} />
+												<Chip
+													key={Math.random()}
+													className={classes.chip}
+													label={category}
+												/>
 											))}
 										</Paper>
 										<br />
@@ -197,7 +198,11 @@ const ClipartDetails = (props) => {
 
 											{imgData.tags
 												? imgData.tags.map((tag) => (
-														<Chip className={classes.chip} label={tag} />
+														<Chip
+															className={classes.chip}
+															key={Math.random()}
+															label={tag}
+														/>
 												  ))
 												: null}
 											<div></div>
@@ -217,6 +222,7 @@ const ClipartDetails = (props) => {
 						{relatedCliparts
 							? relatedCliparts.map((clipart) => (
 									<ClipartCard
+										key={clipart.imgId}
 										className={classes.clipart}
 										clipartInfo={clipart}
 									/>

@@ -73,8 +73,7 @@ const RecentAndPopCliparts = () => {
 		<div>
 			{popularCliparts && <PopularCliparts popularCliparts={popularCliparts} />}
 			<br />
-			<br />
-			<br />
+
 			{recentCliparts && <RecentCliparts recentCliparts={recentCliparts} />}
 			<div className={classes.paginator}>
 				<Pagination
