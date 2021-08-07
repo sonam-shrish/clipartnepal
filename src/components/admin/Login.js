@@ -30,7 +30,7 @@ function Auth({ history }) {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [user, setUser] = useState(null);
-	const [activeTab, setActiveTab] = useState(null);
+	const [activeTab, setActiveTab] = useState(0);
 	const [alertMessage, setAlertMessage] = useState(null);
 
 	const handleSignIn = (e) => {
@@ -44,7 +44,6 @@ function Auth({ history }) {
 		const unsubscribe = auth.onAuthStateChanged((authUser) => {
 			if (authUser) {
 				//logged in compo
-				console.log(authUser);
 				setUser(authUser);
 			} else {
 				//logged out compo

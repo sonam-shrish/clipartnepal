@@ -191,7 +191,9 @@ const AddNewSubCategories = ({ existingCategories, handleError }) => {
 					<option aria-label='None' value='' disabled />
 
 					{existingCategories.map((cat) => (
-						<option value={cat}>{cat}</option>
+						<option key={Math.random()} value={cat}>
+							{cat}
+						</option>
 					))}
 				</Select>
 			</FormControl>

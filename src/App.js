@@ -16,10 +16,8 @@ import Footer from './ui/Footer';
 import SearchResults from './ui/searchResult/SearchResults';
 
 import { getClipartDetails } from './apiCalls/apiCalls';
-import UpdateClipart from './components/upload/UpdateClipart';
 
 function App() {
-	getClipartDetails();
 	return (
 		<ThemeProvider theme={theme}>
 			<div className='App'>

@@ -46,7 +46,6 @@ const useStyles = makeStyles({
 });
 
 const UpdateClipart = (props) => {
-	console.log(props);
 	const { imgDisplayName, categories, tags, subcategories, url, imgId } =
 		props.clipartData ? props.clipartData : {};
 
@@ -76,7 +75,6 @@ const UpdateClipart = (props) => {
 
 	// ////////////////TAGS FUNCTION//////////
 	function handleTagSubmit() {
-		console.log('submitting tag');
 		if (tagInput && !tagsArray.includes(tagInput)) {
 			setTagsArray([...tagsArray, tagInput]);
 			setTagInput('');
@@ -177,6 +175,7 @@ const UpdateClipart = (props) => {
 					<Paper>
 						{tagsArray.map((tag) => (
 							<Chip
+								key={Math.random()}
 								className={classes.chip}
 								label={tag}
 								onDelete={handleTagDelete(tag)}

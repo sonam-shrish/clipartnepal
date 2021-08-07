@@ -218,8 +218,6 @@ export default function AddClipart() {
 
 			return;
 		} else {
-			//joining the spaces in the name with a hyphen
-			let joinedImgName = uploadName.split(' ').join('-');
 			const imgId = uuidv4();
 			const uploadTask = storage
 				.ref('cliparts/' + uploadName + '.' + imageType)
@@ -340,6 +338,7 @@ export default function AddClipart() {
 
 					<FormControl fullWidth className={classes.field}>
 						<Autocomplete
+							key={Math.random()}
 							multiple
 							id='categories-input'
 							onChange={handleCategoriesInput}
@@ -361,7 +360,7 @@ export default function AddClipart() {
 						<Autocomplete
 							onChange={handleSubcategoriesInput}
 							multiple
-							id='categories-input'
+							id='subcategories-input'
 							options={subcategoriesArray}
 							getOptionLabel={(subCategory) => subCategory}
 							filterSelectedOptions
