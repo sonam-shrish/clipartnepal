@@ -129,7 +129,7 @@ const ClipartDetails = (props) => {
 								/>
 								{/* DOWNLOAD BUTTON */}
 								<div onClick={handleDownloadCount}>
-									<a download={imgData.imgName} href={downloadURL}>
+									<a download href={downloadURL}>
 										<Button variant='contained' color='primary'>
 											Download
 										</Button>
