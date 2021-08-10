@@ -25,6 +25,8 @@ const useStyles = makeStyles({
 		marginTop: '10px',
 		borderRadius: '20px',
 		margin: 'auto',
+		overflow: 'auto',
+		maxHeight: '90vh',
 	},
 	preview: {
 		width: '200px',
@@ -46,8 +48,15 @@ const useStyles = makeStyles({
 });
 
 const UpdateClipart = (props) => {
-	const { imgDisplayName, categories, tags, subcategories, url, imgId } =
-		props.clipartData ? props.clipartData : {};
+	const {
+		imgDisplayName,
+		imgDescription,
+		categories,
+		tags,
+		subcategories,
+		url,
+		imgId,
+	} = props.clipartData ? props.clipartData : {};
 
 	const classes = useStyles();
 
@@ -57,6 +66,7 @@ const UpdateClipart = (props) => {
 	const [subCategoriesArray, setSubCategoriesArray] = useState(subcategories);
 	const [tagInput, setTagInput] = useState('');
 	const [tagsArray, setTagsArray] = useState(tags);
+	const [uploadDescription, setUploadDescription] = useState(imgDescription);
 
 	const allCategories = getCategoriesArray();
 	const allSubCategories = getSubCategoriesArray();
@@ -106,6 +116,19 @@ const UpdateClipart = (props) => {
 							variant='outlined'
 							onChange={(e) => setUploadName(e.target.value)}
 							value={uploadName}
+						/>
+					</FormControl>
+
+					{/* Clipart Description */}
+					<FormControl fullWidth className={classes.field}>
+						<TextField
+							multiline
+							label='Clipart Description'
+							placeholder='Add Description'
+							rows={3}
+							variant='outlined'
+							onChange={(e) => setUploadDescription(e.target.value)}
+							value={uploadDescription}
 						/>
 					</FormControl>
 

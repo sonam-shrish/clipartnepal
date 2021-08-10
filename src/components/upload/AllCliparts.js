@@ -42,7 +42,6 @@ const AllCliparts = ({ handleSnackbarOpen }) => {
 	function getDataArray() {
 		const allCliparts = [];
 		db.collection('data')
-			.orderBy('imgName', 'asc')
 			.get()
 			.then(({ docs }) => {
 				docs.forEach((doc) => allCliparts.push(doc.data()));

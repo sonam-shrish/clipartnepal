@@ -55,6 +55,9 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
 		flexWrap: 'wrap',
 	},
+	imgDescription: {
+		maxWidth: '250px',
+	},
 	socialShare: {
 		display: 'flex',
 		gap: '10px',
@@ -156,7 +159,14 @@ const ClipartDetails = (props) => {
 
 							<CardContent className={classes.left}>
 								<Typography variant='h3'>{imgData.imgDisplayName}</Typography>
+
 								<ul className={classes.list}>
+									<li className={classes.imgDescription}>
+										<Typography variant='h6'>Description</Typography>
+										<Typography variant='subtitle1'>
+											{imgData.imgDescription}
+										</Typography>
+									</li>
 									<li>
 										<Visibility />
 										{'  '}

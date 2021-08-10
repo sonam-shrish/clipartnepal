@@ -51,6 +51,7 @@ export default function AddClipart() {
 	const [imageType, setImageType] = useState(null);
 	const [previewURL, setPreviewURL] = useState('');
 	const [uploadName, setUploadName] = useState('');
+	const [uploadDescription, setUploadDescription] = useState('');
 	const [uploadCategories, setUploadCategories] = useState([]);
 	const [uploadSubcategories, setUploadSubcategories] = useState([]);
 	const [tagInput, setTagInput] = useState('');
@@ -241,6 +242,7 @@ export default function AddClipart() {
 							imgId,
 							uploadDate: firebase.firestore.FieldValue.serverTimestamp(),
 							imgDisplayName: uploadName,
+							imgDescription: uploadDescription,
 							size: imageSize,
 							type: imageType,
 							categories: uploadCategories,
@@ -256,6 +258,7 @@ export default function AddClipart() {
 						setUploadCategories([]);
 						setUploadSubcategories([]);
 						setUploadName('');
+						setUploadDescription('');
 						setTags([]);
 					});
 				}
@@ -335,6 +338,19 @@ export default function AddClipart() {
 							variant='outlined'
 							onChange={handleClipartNameChange}
 							value={uploadName}
+						/>
+					</FormControl>
+
+					{/* Clipart Description */}
+					<FormControl fullWidth className={classes.field}>
+						<TextField
+							multiline
+							label='Clipart Description'
+							placeholder='Add Description'
+							rows={3}
+							variant='outlined'
+							onChange={(e) => setUploadDescription(e.target.value)}
+							value={uploadDescription}
 						/>
 					</FormControl>
 					{/* Categories */}
