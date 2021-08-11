@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { db } from '../../firebase';
 import { makeStyles } from '@material-ui/core';
 
@@ -13,10 +13,7 @@ import Chip from '@material-ui/core/Chip';
 // lab imports
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import {
-	getCategoriesArray,
-	getSubCategoriesArray,
-} from '../../apiCalls/apiCalls';
+import { getCategoriesArray } from '../../apiCalls/apiCalls';
 
 const useStyles = makeStyles({
 	form: {
@@ -67,9 +64,35 @@ const UpdateClipart = (props) => {
 	const [tagInput, setTagInput] = useState('');
 	const [tagsArray, setTagsArray] = useState(tags);
 	const [uploadDescription, setUploadDescription] = useState(imgDescription);
+	const [subCategoriesOptions, setSubCategoriesOptions] = useState([]);
 
 	const allCategories = getCategoriesArray();
-	const allSubCategories = getSubCategoriesArray();
+
+	useEffect(() => {
+		function getSubCategoriesOptions() {
+			let subCategoriesArr = [];
+
+			if (categoriesArray) {
+				categoriesArray.forEach((cat) => {
+					db.collection('categories')
+						.doc(cat)
+						.onSnapshot((doc) => {
+							let individualSubcats = doc.data().subcategories;
+							if (individualSubcats) {
+								individualSubcats.forEach((subCat) => {
+									subCategoriesArr.push(subCat.name);
+								});
+							}
+							subCategoriesArr
+								? setSubCategoriesOptions(subCategoriesArr)
+								: setSubCategoriesOptions([]);
+						});
+				});
+			}
+		}
+
+		getSubCategoriesOptions();
+	}, [categoriesArray]);
 
 	function updateClipart(e) {
 		e.preventDefault();
@@ -137,7 +160,9 @@ const UpdateClipart = (props) => {
 						<Autocomplete
 							multiple
 							id='categories-input'
-							onChange={(e, value) => setCategoriesArray(value)}
+							onChange={(e, value) => {
+								setCategoriesArray(value);
+							}}
 							options={allCategories}
 							defaultValue={categories}
 							getOptionLabel={(category) => category}
@@ -160,7 +185,7 @@ const UpdateClipart = (props) => {
 							onChange={(e, value) => setSubCategoriesArray(value)}
 							multiple
 							id='categories-input'
-							options={allSubCategories}
+							options={subCategoriesOptions}
 							defaultValue={subcategories}
 							getOptionLabel={(subCategory) => subCategory}
 							filterSelectedOptions
