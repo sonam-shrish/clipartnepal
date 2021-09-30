@@ -61,10 +61,6 @@ const AddNewCategory = ({ existingCategories, handleError }) => {
 					</Button>
 				</FormControl>
 			</Paper>
-			<AddNewSubCategories
-				existingCategories={existingCategories}
-				handleError={handleError}
-			/>
 		</>
 	);
 };
